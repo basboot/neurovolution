@@ -10,11 +10,6 @@ if __name__ == '__main__':
 
     print(f"Start {config['application']['name']} {config['application']['version']}")
 
-    visualisation = Visualisation(size=config['visualisation']['size'],
-                                  framerate=config['visualisation']['framerate'],
-                                  interval=config['visualisation']['interval']) \
-        if config['visualisation']['on'] else None
+    simulation = Simulation(config)
 
-    simulation = Simulation(debug=config['application']['debug'], visualisation=visualisation,
-                            n_creatures=config['simulation']['n_creatures'])
     simulation.run(config['simulation']['max_iterations'])

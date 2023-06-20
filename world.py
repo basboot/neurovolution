@@ -9,8 +9,13 @@ class World:
     # TREE
     # ROCK
 
-    def __init__(self, size=512):
-        self.size = size
+    def __init__(self, config, size=512):
+
+        self.max_water_depth = config['world_parameters']['max_water_depth']
+        self.grass_growing_speed = config['world_parameters']['grass_growing_speed']
+        self.max_terrain_height = config['world_parameters']['max_terrain_height']
+
+        self.size = config['world_parameters']['size']
         self.grid = [[(self.EMPTY,self.get_color(self.EMPTY)) for _ in range(size)] for _ in range(size)]
         self.make_random_world()
 

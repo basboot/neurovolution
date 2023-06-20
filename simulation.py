@@ -1,16 +1,20 @@
 from creature import Creature
+from visualisation import Visualisation
 from world import World
 
 
 class Simulation:
-    def __init__(self, debug=False, visualisation=None, n_creatures=10):
-        self.debug = debug
+    def __init__(self, config):
+        self.debug = config['application']['debug']
 
-        self.world = World()
+        self.world = World(config)
 
-        self.visualisation = visualisation
+        self.visualisation = Visualisation(size=config['visualisation']['size'],
+                                  framerate=config['visualisation']['framerate'],
+                                  interval=config['visualisation']['interval']) \
+        if config['visualisation']['on'] else None
 
-        self.creatures = [Creature() for _ in range(n_creatures)]
+        self.creatures = [Creature() for _ in range(config['simulation']['n_creatures'])]
 
     def run(self, max_iterations):
         # simulation loop

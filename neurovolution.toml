@@ -13,8 +13,9 @@ size = [500, 500]
 framerate = 60
 interval = 1
 
-[world parameters]
+[world_parameters]
+size = 512
 grass_growing_speed = 1
 max_water_depth = 1000
-max_terrain-height = 3000
+max_terrain_height = 3000
 
