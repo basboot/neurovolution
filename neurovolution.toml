@@ -1,0 +1,7 @@
+[application]
+name = "Neurovolution"
+version = 0.0
+debug = true
+
+[simulation]
+max_iterations = 10
