@@ -47,8 +47,8 @@ class World:
 
     def get_color(self, tile_value):
         if tile_value in self.GRASS :
-            return (0, 255-10 * tile_value, 0)  # Greenish color depending on length grass
+            return (0, 255 - 10 * tile_value, 0)  # Greenish color depending on length grass
         elif tile_value in self.WATER :
-            return (0, 0, 255-10 * tile_value)  # Blueish color depending on water depth
+            return (0, 0, 255 - 10 * tile_value)  # Blueish color depending on water depth
         else:
             return (255, 255, 255)  # Default white color (if unknown tile type)
