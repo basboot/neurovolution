@@ -1,14 +1,16 @@
+from creature import Creature
 from world import World
 
 
 class Simulation:
-    def __init__(self, debug=False, visualisation=None):
+    def __init__(self, debug=False, visualisation=None, n_creatures=10):
         self.debug = debug
 
         self.world = World()
 
         self.visualisation = visualisation
 
+        self.creatures = [Creature() for _ in range(n_creatures)]
 
     def run(self, max_iterations):
         # simulation loop
@@ -28,4 +30,4 @@ class Simulation:
 
             # show
             if self.visualisation is not None:
-                self.visualisation.update(self.world)
+                self.visualisation.update(self.world, self.creatures)

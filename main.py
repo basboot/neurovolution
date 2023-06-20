@@ -15,5 +15,6 @@ if __name__ == '__main__':
                                   interval=config['visualisation']['interval']) \
         if config['visualisation']['on'] else None
 
-    simulation = Simulation(debug=config['application']['debug'], visualisation=visualisation)
+    simulation = Simulation(debug=config['application']['debug'], visualisation=visualisation,
+                            n_creatures=config['simulation']['n_creatures'])
     simulation.run(config['simulation']['max_iterations'])
