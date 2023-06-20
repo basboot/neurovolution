@@ -1,6 +1,6 @@
 import tomli
 
-from Visualisation import Visualisation
+from visualisation import Visualisation
 from simulation import Simulation
 
 if __name__ == '__main__':
