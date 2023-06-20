@@ -2,10 +2,12 @@ from world import World
 
 
 class Simulation:
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, visualisation=None):
         self.debug = debug
 
         self.world = World()
+
+        self.visualisation = visualisation
 
 
     def run(self, max_iterations):
@@ -23,3 +25,7 @@ class Simulation:
             self.world.update()
 
             # TODO: random creation
+
+            # show
+            if self.visualisation is not None:
+                self.visualisation.update(self.world)

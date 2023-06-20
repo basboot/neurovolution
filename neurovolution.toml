@@ -5,3 +5,9 @@ debug = true
 
 [simulation]
 max_iterations = 10
+
+[visualisation]
+on = true
+size = [500, 500]
+framerate = 60
+interval = 1
