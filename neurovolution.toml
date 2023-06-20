@@ -5,6 +5,7 @@ debug = true
 
 [simulation]
 max_iterations = 10
+n_creatures = 100
 
 [visualisation]
 on = true
