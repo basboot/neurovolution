@@ -1,5 +1,8 @@
 import tomli
 
+from visualisation import Visualisation
+from simulation import Simulation
+
 if __name__ == '__main__':
 
     with open("neurovolution.toml", mode="rb") as fp:
@@ -7,11 +10,10 @@ if __name__ == '__main__':
 
     print(f"Start {config['application']['name']} {config['application']['version']}")
 
-    # simulation loop
-    simulation_step = 0
+    visualisation = Visualisation(size=config['visualisation']['size'],
+                                  framerate=config['visualisation']['framerate'],
+                                  interval=config['visualisation']['interval']) \
+        if config['visualisation']['on'] else None
 
-    while simulation_step < config['simulation']['max_iterations']:
-        simulation_step += 1
-
-        if config['application']['debug']:
-            print(f"Simulation step: {simulation_step}")
+    simulation = Simulation(debug=config['application']['debug'], visualisation=visualisation)
+    simulation.run(config['simulation']['max_iterations'])

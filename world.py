@@ -9,9 +9,9 @@ class World:
     # TREE
     # ROCK
 
-    def __init__(self, size):
+    def __init__(self, size=512):
         self.size = size
-        self.grid = [[self.EMPTY for _ in range(size)] for _ in range(size)]
+        self.grid = [[(self.EMPTY,(255,255,255)) for _ in range(size)] for _ in range(size)]
 
     def make_random_world(self):
         for row in range(self.size):
@@ -20,6 +20,8 @@ class World:
                     tile_value = random.choice(self.GRASS)
                     color = self.get_color(tile_value)
                     self.grid[row][col] = (tile_value, color)
+    def update(self):
+        pass
 
     def draw_world(self, screen):
         for row in range(self.size):
