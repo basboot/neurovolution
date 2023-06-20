@@ -12,3 +12,9 @@ on = true
 size = [500, 500]
 framerate = 60
 interval = 1
+
+[world parameters]
+grass_growing_speed = 1
+max_water_depth = 1000
+max_terrain-height = 3000
+
