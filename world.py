@@ -5,7 +5,7 @@ class World:
 
     EMPTY = 0
     GRASS = [1,2,3,4,5,6,7,8,9,10]  # 1..10 are possible grass lengths
-    # WATER
+    WATER = [11,12,13,14,15,16,17,18,19,20] # 11 is shallow, 20 is deep
     # TREE
     # ROCK
 
@@ -19,6 +19,10 @@ class World:
             for col in range(self.size):
                 if 0.5 * self.size < row+col < 1.5 * self.size:
                     tile_value = random.choice(self.GRASS)
+                    color = self.get_color(tile_value)
+                    self.grid[row][col] = (tile_value, color)
+                elif 0.3 * self.size < row+col < 0.5 * self.size:
+                    tile_value = random.choice(self.WATER)
                     color = self.get_color(tile_value)
                     self.grid[row][col] = (tile_value, color)
 
@@ -44,5 +48,7 @@ class World:
     def get_color(self, tile_value):
         if tile_value in self.GRASS :
             return (0, 255-10 * tile_value, 0)  # Greenish color depending on length grass
+        elif tile_value in self.WATER :
+            return (0, 0, 255-10 * tile_value)  # Blueish color depending on water depth
         else:
             return (255, 255, 255)  # Default white color (if unknown tile type)
