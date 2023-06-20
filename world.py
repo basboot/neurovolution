@@ -11,15 +11,17 @@ class World:
 
     def __init__(self, size=512):
         self.size = size
-        self.grid = [[(self.EMPTY,(255,255,255)) for _ in range(size)] for _ in range(size)]
+        self.grid = [[(self.EMPTY,self.get_color(self.EMPTY)) for _ in range(size)] for _ in range(size)]
+        self.make_random_world()
 
     def make_random_world(self):
         for row in range(self.size):
             for col in range(self.size):
-                if self.size < row+col < 1.5 * self.size:
+                if 0.5 * self.size < row+col < 1.5 * self.size:
                     tile_value = random.choice(self.GRASS)
                     color = self.get_color(tile_value)
                     self.grid[row][col] = (tile_value, color)
+
     def update(self):
         pass
 
@@ -27,7 +29,7 @@ class World:
         for row in range(self.size):
             for col in range(self.size):
                 tile_value, color = self.grid[row][col]
-                pygame.draw.rect(screen, color, (col, row, 1,1)) # rect is not necessary
+                pygame.draw.rect(screen, color, (col, row, 2,2)) # rect is not necessary
 
     def give_information_about_location(self, row, col):
         tile_value, _ = self.grid[row][col]
@@ -35,6 +37,6 @@ class World:
 
     def get_color(self, tile_value):
         if tile_value in self.GRASS :
-            return (0, 255-4*tile_value, 0)  # Greenish color depending on length grass
+            return (0, 255-10 * tile_value, 0)  # Greenish color depending on length grass
         else:
             return (255, 255, 255)  # Default white color (if unknown tile type)
