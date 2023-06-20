@@ -7,7 +7,7 @@ class World:
     GRASS = [1,2,3,4,5,6,7,8,9,10]  # 1..10 are possible grass lengths
     WATER = [11,12,13,14,15,16,17,18,19,20] # 11 is shallow, 20 is deep
     # TREE
-    # ROCK
+    ROCK = [31,32,33,34,35,36,37,38,39,40] # 31 is low, 40 is high
 
     def __init__(self, config, size=512):
 
@@ -30,6 +30,10 @@ class World:
                     tile_value = random.choice(self.WATER)
                     color = self.get_color(tile_value)
                     self.grid[row][col] = (tile_value, color)
+                elif 1.5 * self.size < row+col < 2 * self.size:
+                    tile_value = random.choice(self.ROCK)
+                    color = self.get_color(tile_value)
+                    self.grid[row][col] = (tile_value, color)
 
     def update(self):
         for row in range(self.size):
@@ -46,6 +50,8 @@ class World:
                 tile_value, color = self.grid[row][col]
                 pygame.draw.rect(screen, color, (col, row, 1,1)) # rect is not necessary
 
+        # screen.fill((255,0,0), ((50,50), (1, 1))) better?
+
     def give_information_about_location(self, row, col):
         tile_value, _ = self.grid[row][col]
         return tile_value
@@ -55,5 +61,7 @@ class World:
             return (0, 255 - 10 * tile_value, 0)  # Greenish color depending on length grass
         elif tile_value in self.WATER :
             return (0, 0, 255 - 10 * tile_value)  # Blueish color depending on water depth
+        elif tile_value in self.ROCK:
+            return (150, 75, 0 )  # brown for now
         else:
             return (255, 255, 255)  # Default white color (if unknown tile type)
