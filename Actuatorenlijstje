@@ -1,0 +1,4 @@
+MOV beweegt met snelheid P maal tanh input. Indien negatief dus in tegenovergestelde richting.
+ROT roteert (graden) rechtsom met P maal tanh input. Indien negatief dus linksom.
+REP reproduceert met ...... Wat als tanh negatief is? 0?
+EAT eet met gretigheid P maal tanh. Als negatief : 0
