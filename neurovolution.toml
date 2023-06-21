@@ -21,7 +21,9 @@ interval = 1
 
 [world_parameters]
 size = 512
-grass_growing_speed = 1
+grass_growing_speed = 0.01
+max_grass_length = 10
+grass_eat_speed = 1
 max_water_depth = 1000
 max_terrain_height = 3000
 
