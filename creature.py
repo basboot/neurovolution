@@ -66,10 +66,14 @@ class Creature:
         for actuator in self.state['actuators']:
             use_actuator(actuator[0], actuator[2], outputs[output_start:actuator[1]], simulation, world, self)
 
-    def reproduce(self, other=None):
+    def reproduce(self, other=None, same_location=True, share_energy=True):
         new_dna = self.state['dna'].reproduce(other)
         new_creature = Creature(self.config, new_dna)
-        new_creature.state['position'] = self.state['position']
 
-        new_creature.state['energy'] = self.state['energy'] = self.state['energy'] / 2
+        if same_location:
+            new_creature.state['position'] = self.state['position']
+
+        if share_energy:
+            new_creature.state['energy'] = self.state['energy'] = self.state['energy'] / 2
+
         return new_creature
