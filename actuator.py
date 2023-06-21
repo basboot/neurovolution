@@ -19,6 +19,9 @@ def move(simulation, world, creature, signals):
     creature.state['position'] = [creature.state['position'][0],
                                   creature.state['position'][1] + signals[3] * 20]
 
+    # check world if move is possible
+    creature.state['position'] = simulation.move(creature.state['position'])
+
 def reproduce(simulation, world, creature, signals):
     if signals[0] > 0.99 and creature.state['energy'] > creature.config['creature']['min_energy_for_reproduction']:
         new_creature = creature.reproduce()

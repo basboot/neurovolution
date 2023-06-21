@@ -9,9 +9,15 @@ n_creatures = 100
 max_creatures = 10000
 min_creatures = 10
 
+force_new_generation = true
+generation_size = 100
+generation_lifespan = 100
+generation_selection = 'left_upper_corner'
+
+
 [creature]
 max_energy = 10
-energy_per_timestep = 1
+energy_per_timestep = 0
 energy_from_grass = 1.5
 energy_from_dirt = -1.5
 min_energy_for_reproduction = 1
@@ -35,7 +41,7 @@ max_terrain_height = 3000
 # configformat: 'functionname', number of outputs
 functions = [
 #    ['heartbeat', 1],
-    ['is_standing_on_grass', 1],
+#    ['is_standing_on_grass', 1],
     ['four_random_values', 4]
 ]
 
@@ -44,8 +50,8 @@ functions = [
 # configformat: 'functionname', number of input signals
 functions = [
     ['move', 4],
-    ['reproduce', 1],
-    ['eat_grass', 1]
+#    ['reproduce', 1],
+#    ['eat_grass', 1]
 ]
 
 [dna]
@@ -62,7 +68,7 @@ body = {p = 0.5, sd = 0.5}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
 hidden_layers = [
-    [5, 'relu']
+#    [5, 'relu']
 ]
 output_activation = 'sigmoid'
 
