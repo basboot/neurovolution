@@ -1,8 +1,10 @@
 import random
 
+import numpy as np
 import pygame
 
 from actuator import use_actuator
+from brain import Brain
 from dna import DNA
 from sensor import use_sensor
 
@@ -24,6 +26,8 @@ class Creature:
         self.state['actuators'] = self.state['dna'].get_actuators()
         self.state['properties'] = self.state['dna'].get_properties()
 
+        self.state['brain'] = Brain(self.state['dna'].get_brain_architecture(), self.state['dna'].brain)
+
 
 
     def draw_creature(self, screen):
@@ -39,9 +43,9 @@ class Creature:
         # TODO: implement brain
 
         # dummy outputs 0-1
-        outputs = []
-        for actuator in self.state['actuators']:
-            outputs += [random.random() for _ in range(actuator[1])]
+        outputs = self.state['brain'].forward_propagation(inputs)
+        # for actuator in self.state['actuators']:
+        #     outputs += [random.random() for _ in range(actuator[1])]
         return outputs
 
     def get_sensors(self, simulation, world):
@@ -50,7 +54,9 @@ class Creature:
 
         for sensor in self.state['sensors']:
             inputs += use_sensor(sensor[0], sensor[1], sensor[2], simulation, world, self)
-        return inputs
+
+        # return sensordata as column vector for nn
+        return np.reshape(inputs, (len(inputs), 1))
 
     def use_actuators(self, outputs, simulation, world):
         output_start = 0

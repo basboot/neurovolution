@@ -39,3 +39,11 @@ properties = [
     ['heartbeat', 1, 10, true]
 ]
 
+[brain]
+# only hidden layers have to be specified, first and last layer are determined by sensors and actuators
+# number of neurons, activation
+hidden_layers = [
+    [5, 'relu']
+]
+output_activation = 'sigmoid'
+

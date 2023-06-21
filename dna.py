@@ -1,7 +1,6 @@
 import random
 
-from sensor import *
-
+from brain import create_random_brain
 
 class DNA:
     def __init__(self, config, brain=None, body=None):
@@ -15,7 +14,7 @@ class DNA:
 
     def create_random_dna(self):
         # config for NN
-        self.brain = []
+        self.brain = create_random_brain(self.get_brain_architecture())
 
         # physical properties
         self.body = []
@@ -64,6 +63,34 @@ class DNA:
             properties[name] = value
 
         return properties
+
+    def get_brain_architecture(self):
+        nn_architecture = []
+        n_inputs = 0
+        for i in range(len(self.config['sensors']['functions'])):
+            n_inputs += self.config['sensors']['functions'][i][1]
+
+        n_outputs = 0
+        for i in range(len(self.config['actuators']['functions'])):
+            n_outputs += self.config['actuators']['functions'][i][1]
+
+        input_dim = n_inputs
+
+        # add hidden layers
+        for layer_config in self.config['brain']['hidden_layers']:
+            output_dim = layer_config[0]
+            activation = layer_config[1]
+            nn_architecture.append(
+                {"input_dim": input_dim, "output_dim": output_dim, "activation": activation}
+            )
+            input_dim = output_dim
+
+        # add output layer
+        nn_architecture.append(
+            {"input_dim": input_dim, "output_dim": n_outputs, "activation": self.config['brain']['output_activation']}
+        )
+
+        return nn_architecture
 
 
 
