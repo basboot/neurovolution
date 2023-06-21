@@ -11,6 +11,14 @@ def move(simulation, world, creature, signals):
     creature.state['position'] = [creature.state['position'][0] + signals[1] * 20,
                                   creature.state['position'][1]]
 
+    # move up
+    creature.state['position'] = [creature.state['position'][0],
+                                  creature.state['position'][1] - signals[2] * 20]
+
+    # move down
+    creature.state['position'] = [creature.state['position'][0],
+                                  creature.state['position'][1] + signals[3] * 20]
+
 def reproduce(simulation, world, creature, signals):
     if signals[0] > 0.99:
         new_creature = creature.reproduce()
