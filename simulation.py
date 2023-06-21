@@ -41,6 +41,7 @@ class Simulation:
 
             # add new creatues
             self.creatures += self.born_creatures
+            print(f"{len(self.born_creatures)} born")
             self.born_creatures = []
 
             # remove old creatures
