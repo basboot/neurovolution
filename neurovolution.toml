@@ -4,7 +4,7 @@ version = 0.1
 debug = true
 
 [simulation]
-max_iterations = 50
+max_iterations = 500
 n_creatures = 100
 max_creatures = 10000
 min_creatures = 10
@@ -12,6 +12,7 @@ min_creatures = 10
 [creature]
 max_energy = 10
 energy_per_timestep = 1
+energy_from_grass = 5
 
 [visualisation]
 on = true
@@ -31,7 +32,8 @@ max_terrain_height = 3000
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs
 functions = [
-    ['heartbeat', 1]
+    ['heartbeat', 1],
+    ['is_standing_on_grass', 1]
 ]
 
 [actuators]
@@ -39,7 +41,8 @@ functions = [
 # configformat: 'functionname', number of input signals
 functions = [
     ['move', 2],
-    ['reproduce', 1]
+    ['reproduce', 1],
+    ['eat_grass', 1]
 ]
 
 [dna]

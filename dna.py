@@ -97,8 +97,8 @@ class DNA:
         return nn_architecture
 
     def reproduce(self, other=None):
-        brain = self.brain.copy()
-        body = self.body.copy()
+        brain = self.brain.copy() if other is None else (self.brain + other.brain) / 2
+        body = self.body.copy() if other is None else (self.body + other.body) / 2
 
         if np.random.random() < self.config['mutation']['brain']['p']:
             brain = np.random.normal(brain, self.config['mutation']['brain']['sd'])
