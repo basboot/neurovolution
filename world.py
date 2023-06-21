@@ -16,6 +16,7 @@ class World:
 
         self.max_water_depth = config['world_parameters']['max_water_depth']
         self.grass_growing_speed = config['world_parameters']['grass_growing_speed']
+        self.max_grass_length = config['world_parameters']['max_grass_length']
         self.max_terrain_height = config['world_parameters']['max_terrain_height']
 
         self.size = config['world_parameters']['size']
@@ -26,10 +27,10 @@ class World:
     def make_random_world(self):
         for row in range(self.size):
             for col in range(self.size):
-                if row < self.size / 3 or col > self.size / 3:
+                if row < 0.2 * self.size or row > 0.8 * self.size:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
-                    self.grass_length[row][col] = random.randint(1,10)
+                    self.grass_length[row][col] = random.randint(1,self.max_grass_length)
 
     def eat_grass(self,row,col):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
