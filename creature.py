@@ -10,8 +10,6 @@ from sensor import use_sensor
 
 
 class Creature:
-    MAX_ENERGY = 100
-
     def __init__(self, config, dna=None):
         self.config = config
         self.state = {
@@ -19,7 +17,7 @@ class Creature:
             'position': (random.randrange(0, config['world_parameters']['size']),
                          random.randrange(0, config['world_parameters']['size'])),
             'dna': DNA(config) if dna is None else dna,
-            'energy': self.MAX_ENERGY,
+            'energy': config['creature']['max_energy'],
         }
 
         # add sensors from DNA
@@ -39,6 +37,8 @@ class Creature:
         inputs = self.get_sensors(simulation, world)
         outputs = self.use_brain(inputs)
         self.use_actuators(outputs, simulation, world)
+
+        self.state['energy'] -= self.config['creature']['energy_per_timestep']
 
     def use_brain(self, inputs):
         # TODO: implement brain

@@ -15,7 +15,8 @@ class Simulation:
         if config['visualisation']['on'] else None
 
         self.creatures = [Creature(config) for _ in range(config['simulation']['n_creatures'])]
-        self.new_creatures = []
+        self.born_creatures = []
+        self.dead_creatures = []
         self.simulation_step = 0
 
     def run(self, max_iterations):
@@ -34,10 +35,17 @@ class Simulation:
 
             for creature in self.creatures:
                 creature.update(self, self.world)
+                if creature.state['energy'] < 0:
+                    self.dead_creatures.append(creature)
 
             # add new creatues
-            self.creatures += self.new_creatures
-            self.new_creatures = []
+            self.creatures += self.born_creatures
+            self.born_creatures = []
+
+            # remove old creatures
+            for creature in self.dead_creatures:
+                self.creatures.remove(creature)
+            self.dead_creatures = []
 
             # TODO: random creation
 
@@ -46,4 +54,4 @@ class Simulation:
                 self.visualisation.update(self.world, self.creatures)
 
     def add_creature(self, creature):
-        self.new_creatures.append(creature)
+        self.born_creatures.append(creature)

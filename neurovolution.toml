@@ -7,6 +7,10 @@ debug = true
 max_iterations = 50
 n_creatures = 100
 
+[creature]
+max_energy = 10
+energy_per_timestep = 1
+
 [visualisation]
 on = true
 size = [500, 500]
