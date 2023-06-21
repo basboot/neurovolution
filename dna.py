@@ -1,5 +1,7 @@
 import random
 
+import numpy as np
+
 from brain import create_random_brain
 
 class DNA:
@@ -14,7 +16,7 @@ class DNA:
 
     def create_random_dna(self):
         # config for NN
-        self.brain = create_random_brain(self.get_brain_architecture())
+        self.brain = np.array(create_random_brain(self.get_brain_architecture()))
 
         # physical properties
         self.body = []
@@ -33,6 +35,8 @@ class DNA:
         for property in self.config['dna']['properties']:
             value = random.uniform(property[1], property[2])
             self.body.append(value)
+
+        self.body = np.array(self.body)
 
 
     def get_sensors(self):
@@ -93,7 +97,16 @@ class DNA:
         return nn_architecture
 
     def reproduce(self, other=None):
-        return DNA(self.config, self.brain.copy(), self.body.copy())
+        brain = self.brain.copy()
+        body = self.body.copy()
+
+        if np.random.random() < self.config['mutation']['brain']['p']:
+            brain = np.random.normal(brain, self.config['mutation']['brain']['sd'])
+
+        if np.random.random() < self.config['mutation']['body']['p']:
+            brain = np.random.normal(brain, self.config['mutation']['body']['sd'])
+
+        return DNA(self.config, brain, body)
 
 
 

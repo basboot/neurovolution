@@ -44,6 +44,10 @@ properties = [
     ['heartbeat', 1, 10, true]
 ]
 
+[mutation]
+brain = {p = 0.1, sd = 0.1}
+body = {p = 0.25, sd = 0.5}
+
 [brain]
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
