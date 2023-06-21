@@ -12,7 +12,7 @@ def create_random_brain(nn_architecture, seed=None):
         layer_input_size = layer["input_dim"]
         layer_output_size = layer["output_dim"]
 
-        random_brain += [np.random.random() * 0.1 for _ in range(layer_output_size * layer_input_size + layer_output_size)]
+        random_brain += [np.random.random() * 1.0 for _ in range(layer_output_size * layer_input_size + layer_output_size)]
 
 
 

@@ -15,6 +15,7 @@ class Simulation:
         if config['visualisation']['on'] else None
 
         self.creatures = [Creature(config) for _ in range(config['simulation']['n_creatures'])]
+        self.new_creatures = []
         self.simulation_step = 0
 
     def run(self, max_iterations):
@@ -34,8 +35,15 @@ class Simulation:
             for creature in self.creatures:
                 creature.update(self, self.world)
 
+            # add new creatues
+            self.creatures += self.new_creatures
+            self.new_creatures = []
+
             # TODO: random creation
 
             # show
             if self.visualisation is not None:
                 self.visualisation.update(self.world, self.creatures)
+
+    def add_creature(self, creature):
+        self.new_creatures.append(creature)

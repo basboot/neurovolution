@@ -30,7 +30,8 @@ functions = [
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-    ['move', 2]
+    ['move', 2],
+    ['reproduce', 1]
 ]
 
 [dna]

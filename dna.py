@@ -92,6 +92,9 @@ class DNA:
 
         return nn_architecture
 
+    def reproduce(self, other=None):
+        return DNA(self.config, self.brain.copy(), self.body.copy())
+
 
 
 

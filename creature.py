@@ -12,12 +12,13 @@ from sensor import use_sensor
 class Creature:
     MAX_ENERGY = 100
 
-    def __init__(self, config):
+    def __init__(self, config, dna=None):
+        self.config = config
         self.state = {
             # TODO: move position select to simulation
             'position': (random.randrange(0, config['world_parameters']['size']),
                          random.randrange(0, config['world_parameters']['size'])),
-            'dna': DNA(config),
+            'dna': DNA(config) if dna is None else dna,
             'energy': self.MAX_ENERGY,
         }
 
@@ -31,7 +32,7 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        screen.set_at(self.state['position'], (255, 0, 0))
+        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
         #pygame.draw.circle(screen, (255, 0, 0), self.state['position'], 10)
 
     def update(self, simulation, world):
@@ -62,3 +63,8 @@ class Creature:
         output_start = 0
         for actuator in self.state['actuators']:
             use_actuator(actuator[0], actuator[2], outputs[output_start:actuator[1]], simulation, world, self)
+
+    def reproduce(self, other=None):
+        new_dna = self.state['dna'].reproduce(other)
+        new_creature = Creature(self.config, new_dna)
+        return new_creature
