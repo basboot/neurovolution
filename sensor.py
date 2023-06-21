@@ -11,6 +11,14 @@ def is_standing_on_grass(simulation, world, creature):
                                                         int(creature.state['position'][1]))
     return [1] if information == World.GRASS else [0]
 
+def find_middle(simulation, world, creature):
+    x_middle = creature.config['world_parameters']['size'] / 2
+    y_middle = creature.config['world_parameters']['size'] / 2
+    x = creature.state['position'][0]
+    y = creature.state['position'][1]
+
+    return [int(x < x_middle), int(x > x_middle), int(y < y_middle), int(y > y_middle)]
+
 def four_random_values(simulation, world, creature):
     return [np.random.random() * 1.0 for _ in range(4)]
 

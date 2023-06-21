@@ -36,6 +36,8 @@ class Simulation:
             print("No creatures met the selection criterium, run another epoch with same creatures")
             return
 
+        print(f"{len(survivors) / self.config['simulation']['generation_size'] * 100}% survivors")
+
         self.creatures = []
         for _ in range(self.config['simulation']['generation_size']):
             survivor = random.choice(survivors)

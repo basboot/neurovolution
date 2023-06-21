@@ -4,15 +4,15 @@ version = 0.1
 debug = true
 
 [simulation]
-max_iterations = 1000
-n_creatures = 100
+max_iterations = 10000
+n_creatures = 1000
 max_creatures = 10000
 min_creatures = 10
 
 force_new_generation = true
-generation_size = 100
+generation_size = 1000
 generation_lifespan = 100
-generation_selection = 'left_upper_corner'
+generation_selection = 'middle'
 
 
 [creature]
@@ -42,7 +42,8 @@ max_terrain_height = 3000
 functions = [
 #    ['heartbeat', 1],
 #    ['is_standing_on_grass', 1],
-    ['four_random_values', 4]
+    ['four_random_values', 4],
+    ['find_middle', 4]
 ]
 
 [actuators]
@@ -61,7 +62,7 @@ properties = [
 ]
 
 [mutation]
-brain = {p = 0.5, sd = 0.1}
+brain = {p = 0.5, sd = 0.25}
 body = {p = 0.5, sd = 0.5}
 
 [brain]
