@@ -8,6 +8,7 @@ class World:
     WATER = 2
     TREE = 3
     ROCK = 4
+    SEA = 5
     # kadaver
     # luchtje
 
