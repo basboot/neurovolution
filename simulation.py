@@ -14,21 +14,25 @@ class Simulation:
                                   interval=config['visualisation']['interval']) \
         if config['visualisation']['on'] else None
 
-        self.creatures = [Creature() for _ in range(config['simulation']['n_creatures'])]
+        self.creatures = [Creature(config) for _ in range(config['simulation']['n_creatures'])]
+        self.simulation_step = 0
 
     def run(self, max_iterations):
         # simulation loop
-        simulation_step = 0
+
 
         # TODO: populate world
 
-        while simulation_step <max_iterations:
-            simulation_step += 1
+        while self.simulation_step <max_iterations:
+            self.simulation_step += 1
 
             if self.debug:
-                print(f"Simulation step: {simulation_step}")
+                print(f"Simulation step: {self.simulation_step}")
 
             self.world.update()
+
+            for creature in self.creatures:
+                creature.update(self, self.world)
 
             # TODO: random creation
 
