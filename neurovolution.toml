@@ -4,13 +4,13 @@ version = 0.1
 debug = true
 
 [simulation]
-max_iterations = 10
+max_iterations = 50
 n_creatures = 100
 
 [visualisation]
 on = true
 size = [500, 500]
-framerate = 60
+framerate = 10
 interval = 1
 
 [world_parameters]
@@ -18,4 +18,24 @@ size = 512
 grass_growing_speed = 1
 max_water_depth = 1000
 max_terrain_height = 3000
+
+[sensors]
+# all sensor functions must be defined in sensor.py
+# configformat: 'functionname', number of outputs
+functions = [
+    ['heartbeat', 1]
+]
+
+[actuators]
+# all actuator functions must be defined in actuator.py
+# configformat: 'functionname', number of input signals
+functions = [
+    ['move', 2]
+]
+
+[dna]
+# 'name', min, max, rounded
+properties = [
+    ['heartbeat', 1, 10, true]
+]
 
