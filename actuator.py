@@ -20,7 +20,7 @@ def move(simulation, world, creature, signals):
                                   creature.state['position'][1] + signals[3] * 20]
 
 def reproduce(simulation, world, creature, signals):
-    if signals[0] > 0.99:
+    if signals[0] > 0.99 and creature.state['energy'] > creature.config['creature']['min_energy_for_reproduction']:
         new_creature = creature.reproduce()
         simulation.add_creature(new_creature)
 
@@ -32,6 +32,9 @@ def eat_grass(simulation, world, creature, signals):
         if information == World.GRASS:
             world.eat_grass(row, col)
             creature.state['energy'] += creature.config['creature']['energy_from_grass']
+        else:
+            # eat dirt
+            creature.state['energy'] += creature.config['creature']['energy_from_dirt']
 
 
 def use_actuator(name, active, signals, simulation, world, creature):

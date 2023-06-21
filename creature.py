@@ -30,8 +30,8 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
-        #pygame.draw.circle(screen, (255, 0, 0), self.state['position'], 10)
+        #screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
+        pygame.draw.circle(screen, (255, 0, 0), (int(self.state['position'][0]), int(self.state['position'][1])), max(1, self.state['energy']))
 
     def update(self, simulation, world):
         inputs = self.get_sensors(simulation, world)
@@ -39,6 +39,8 @@ class Creature:
         self.use_actuators(outputs, simulation, world)
 
         self.state['energy'] -= self.config['creature']['energy_per_timestep']
+
+        self.state['energy'] = min(self.state['energy'], self.config['creature']['max_energy'])
 
     def use_brain(self, inputs):
         # TODO: implement brain
