@@ -22,12 +22,13 @@ class World:
         self.size = config['world_parameters']['size']
         self.grid = [[self.EMPTY for _ in range(size)] for _ in range(size)]
         self.grass_length = [[0 for _ in range(size)] for _ in range(size)]
+
         self.make_random_world()
 
     def make_random_world(self):
         for row in range(self.size):
             for col in range(self.size):
-                if row < 0.2 * self.size or row > 0.8 * self.size:
+                if row < 0.1 * self.size or row > 0.9 * self.size:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
                     self.grass_length[row][col] = random.randint(1,self.max_grass_length)
@@ -47,7 +48,7 @@ class World:
             for col in range(self.size):
                 tile_value = self.grid[row][col]
                 if tile_value == self.GRASS:
-                    self.grass_length[row][col] = min(self.grass_length[row][col]+ 0.01,10)
+                    self.grass_length[row][col] = min(self.grass_length[row][col]+ self.grass_growing_speed, self.max_grass_length)
 
 
 
