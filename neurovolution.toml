@@ -9,7 +9,8 @@ n_creatures = 1000
 max_creatures = 10000
 min_creatures = 10
 
-force_new_generation = true
+# for testing the learning capacity. don't forget to disable dying and reproducing if you use it.
+force_new_generation = false
 generation_size = 1000
 generation_lifespan = 100
 generation_selection = 'middle'
@@ -17,7 +18,7 @@ generation_selection = 'middle'
 
 [creature]
 max_energy = 10
-energy_per_timestep = 0
+energy_per_timestep = 1
 energy_from_grass = 1.5
 energy_from_dirt = -1.5
 min_energy_for_reproduction = 1
@@ -41,9 +42,9 @@ max_terrain_height = 3000
 # configformat: 'functionname', number of outputs
 functions = [
 #    ['heartbeat', 1],
-#    ['is_standing_on_grass', 1],
+    ['is_standing_on_grass', 1],
     ['four_random_values', 4],
-    ['find_middle', 4]
+#    ['find_middle', 4]
 ]
 
 [actuators]
@@ -51,8 +52,8 @@ functions = [
 # configformat: 'functionname', number of input signals
 functions = [
     ['move', 4],
-#    ['reproduce', 1],
-#    ['eat_grass', 1]
+    ['reproduce', 1],
+    ['eat_grass', 1]
 ]
 
 [dna]

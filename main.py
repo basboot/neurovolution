@@ -1,11 +1,7 @@
-import time
-
 import tomli
 
 from visualisation import Visualisation
 from simulation import Simulation
-
-time.sleep(10)
 
 if __name__ == '__main__':
 
