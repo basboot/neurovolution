@@ -32,6 +32,9 @@ def eat_grass(simulation, world, creature, signals):
         if information == World.GRASS:
             world.eat_grass(row, col)
             creature.state['energy'] += creature.config['creature']['energy_from_grass']
+        else:
+            # eat dirt
+            creature.state['energy'] += creature.config['creature']['energy_from_dirt']
 
 
 def use_actuator(name, active, signals, simulation, world, creature):

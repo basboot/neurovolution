@@ -4,7 +4,7 @@ version = 0.1
 debug = true
 
 [simulation]
-max_iterations = 500
+max_iterations = 1000
 n_creatures = 100
 max_creatures = 10000
 min_creatures = 10
@@ -12,7 +12,9 @@ min_creatures = 10
 [creature]
 max_energy = 10
 energy_per_timestep = 1
-energy_from_grass = 5
+energy_from_grass = 1.5
+energy_from_dirt = -1.5
+min_energy_for_reproduction = 1
 
 [visualisation]
 on = true
@@ -52,8 +54,8 @@ properties = [
 ]
 
 [mutation]
-brain = {p = 0.1, sd = 0.1}
-body = {p = 0.25, sd = 0.5}
+brain = {p = 0.5, sd = 0.1}
+body = {p = 0.5, sd = 0.5}
 
 [brain]
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
