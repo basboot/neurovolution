@@ -48,9 +48,9 @@ class World:
                 if tile_value == self.GRASS:
                     length = self.grass_length[row][col]
                     color = (0, 255 - length * 10 ,0)
-                    pygame.draw.rect(screen, color, (col, row, 1,1)) # rect is not necessary ?
+                    screen.set_at((row,col), color)
 
-        # screen.fill((255,0,0), ((50,50), (1, 1))) better?
+
 
     def give_information_about_location(self, row, col):
         tile_value, _ = self.grid[row][col]
