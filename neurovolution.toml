@@ -6,6 +6,8 @@ debug = true
 [simulation]
 max_iterations = 50
 n_creatures = 100
+max_creatures = 10000
+min_creatures = 10
 
 [creature]
 max_energy = 10
