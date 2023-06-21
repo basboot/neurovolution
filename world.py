@@ -31,13 +31,19 @@ class World:
                     self.grid[row][col] = tile_value
                     self.grass_length[row][col] = random.randint(1,10)
 
+    def eat_grass(self,row,col):
+        self.grass_length[row][col] -= 1
+        if self.grass_length[row][col] == 0:
+            self.grid[row][col] = self.EMPTY
+
+
 
     def update(self):
         for row in range(self.size):
             for col in range(self.size):
                 tile_value = self.grid[row][col]
                 if tile_value == self.GRASS:
-                    self.grass_length[row][col] = min(self.grass_length[row][col]+1,20)
+                    self.grass_length[row][col] = min(self.grass_length[row][col]+ 0.01,10)
 
 
 
