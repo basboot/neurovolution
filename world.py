@@ -59,7 +59,7 @@ class World:
 
 
     def give_information_about_location(self, row, col):
-        tile_value, _ = self.grid[row][col]
+        tile_value = self.grid[row][col]
         return tile_value
 
 
