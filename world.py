@@ -32,8 +32,11 @@ class World:
                     self.grass_length[row][col] = random.randint(1,10)
 
     def eat_grass(self,row,col):
+        if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
+            return
+
         self.grass_length[row][col] -= 1
-        if self.grass_length[row][col] == 0:
+        if self.grass_length[row][col] <= 0:
             self.grid[row][col] = self.EMPTY
 
 
@@ -59,7 +62,10 @@ class World:
 
 
     def give_information_about_location(self, row, col):
-        tile_value, _ = self.grid[row][col]
+        if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
+            return self.EMPTY
+
+        tile_value = self.grid[row][col]
         return tile_value
 
 
