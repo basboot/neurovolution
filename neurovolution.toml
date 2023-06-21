@@ -17,7 +17,7 @@ energy_from_grass = 5
 [visualisation]
 on = true
 size = [500, 500]
-framerate = 10
+framerate = 60
 interval = 1
 
 [world_parameters]
@@ -38,7 +38,7 @@ functions = [
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-    ['move', 2],
+    ['move', 4],
     ['reproduce', 1],
     ['eat_grass', 1]
 ]
