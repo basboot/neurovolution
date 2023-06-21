@@ -67,4 +67,5 @@ class Creature:
     def reproduce(self, other=None):
         new_dna = self.state['dna'].reproduce(other)
         new_creature = Creature(self.config, new_dna)
+        new_creature.state['position'] = self.state['position']
         return new_creature
