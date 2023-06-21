@@ -34,8 +34,9 @@ max_terrain_height = 3000
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs
 functions = [
-    ['heartbeat', 1],
-    ['is_standing_on_grass', 1]
+#    ['heartbeat', 1],
+    ['is_standing_on_grass', 1],
+    ['four_random_values', 4]
 ]
 
 [actuators]
