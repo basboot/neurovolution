@@ -41,19 +41,19 @@ max_terrain_height = 3000
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs
 functions = [
-#    ['heartbeat', 1],
-    ['is_standing_on_grass', 1],
-    ['four_random_values', 4],
-#    ['find_middle', 4]
+#    ['heartbeat', 1, 'None'],
+    ['is_standing_on_grass', 1, 'None'],
+    ['four_random_values', 4, 'None'],
+#    ['find_middle', 4, 'None']
 ]
 
 [actuators]
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-    ['move', 4],
-    ['reproduce', 1],
-    ['eat_grass', 1]
+    ['move', 4, 'sigmoid'],
+    ['reproduce', 1, 'sigmoid'],
+    ['eat_grass', 1, 'sigmoid']
 ]
 
 [dna]
