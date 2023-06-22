@@ -70,7 +70,7 @@ body = {p = 0.5, sd = 0.5}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
 hidden_layers = [
-#    [5, 'relu']
+    ['layer_1', 5, 'relu']
 ]
 output_activation = 'sigmoid'
 

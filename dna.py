@@ -82,8 +82,8 @@ class DNA:
 
         # add hidden layers
         for layer_config in self.config['brain']['hidden_layers']:
-            output_dim = layer_config[0]
-            activation = layer_config[1]
+            output_dim = layer_config[1]
+            activation = layer_config[2]
             nn_architecture.append(
                 {"input_dim": input_dim, "output_dim": output_dim, "activation": activation}
             )
