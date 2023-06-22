@@ -74,3 +74,14 @@ hidden_layers = [
 ]
 output_activation = 'sigmoid'
 
+# define connections: [sensor, hidden_layer], [hidden_layer, actuator] or [sensor, actuator]
+# every connection will get its own outxin parameters
+# note: the order they are defined is the order in which they will be calculated
+connections = [
+    ['is_standing_on_grass', 'layer_1'],
+    ['four_random_values', 'layer_1'],
+    ['layer_1', 'move'],
+    ['layer_1', 'reproduce'],
+    ['layer_1', 'eat_grass'],
+]
+
