@@ -82,6 +82,7 @@ output_activation = 'sigmoid'
 connections = [
     ['is_standing_on_grass', 'layer_1'],
     ['four_random_values', 'layer_1'],
+    ['random_0_or_1', 'layer_1'],
     ['layer_1', 'small_move'],
     ['layer_1', 'reproduce'],
     ['layer_1', 'eat_grass'],
