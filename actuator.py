@@ -51,6 +51,9 @@ def eat_grass(simulation, world, creature, signals):
             # eat dirt
             creature.state['energy'] += creature.config['creature']['energy_from_dirt']
 
+def die(simulation, world, creature, signals):
+    if signals[0] > 0.5:
+        creature.state['energy'] = 0
 
 def use_actuator(name, active, signals, simulation, world, creature):
     if active:
