@@ -18,9 +18,9 @@ generation_selection = 'middle'
 
 [creature]
 max_energy = 10
-energy_per_timestep = 1
+energy_per_timestep = 0.5
 energy_from_grass = 1.5
-energy_from_dirt = -1.5
+energy_from_dirt = -0.1
 min_energy_for_reproduction = 1
 
 [visualisation]
@@ -44,16 +44,18 @@ functions = [
 #    ['heartbeat', 1, 'None'],
     ['is_standing_on_grass', 1, 'None'],
     ['four_random_values', 4, 'None'],
-#    ['find_middle', 4, 'None']
+    ['random_0_or_1', 1, 'None'],
+#    ['find_middle', 4, 'None]
 ]
 
 [actuators]
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-    ['move', 4, 'sigmoid'],
+#    ['move', 4, 'sigmoid'],
     ['reproduce', 1, 'sigmoid'],
-    ['eat_grass', 1, 'sigmoid']
+    ['eat_grass', 1, 'sigmoid'],
+    ['small_move',1, 'sigmoid']
 ]
 
 [dna]
@@ -80,7 +82,7 @@ output_activation = 'sigmoid'
 connections = [
     ['is_standing_on_grass', 'layer_1'],
     ['four_random_values', 'layer_1'],
-    ['layer_1', 'move'],
+    ['layer_1', 'small_move'],
     ['layer_1', 'reproduce'],
     ['layer_1', 'eat_grass'],
 ]

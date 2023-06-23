@@ -1,3 +1,5 @@
+import random
+
 from world import World
 
 
@@ -18,6 +20,16 @@ def move(simulation, world, creature, signals):
     # move down
     creature.state['position'] = [creature.state['position'][0],
                                   creature.state['position'][1] + signals[3] * 20]
+
+    # check world if move is possible
+    creature.state['position'] = simulation.move(creature.state['position'])
+
+def small_move(simulation, world, creature, signals):
+    dx = random.choice([-1,0,1])
+    dy = random.choice([-1,0,1])
+    # make small move
+    creature.state['position'] = [creature.state['position'][0] + dx ,
+                                  creature.state['position'][1] + dy]
 
     # check world if move is possible
     creature.state['position'] = simulation.move(creature.state['position'])
