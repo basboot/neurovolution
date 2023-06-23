@@ -16,7 +16,10 @@ class DNA:
 
     def create_random_dna(self):
         # config for NN
-        self.brain = np.array(create_random_brain(self.get_brain_architecture()))
+        
+        # collect sinput (sensors), hidden and output (actuators) layers
+        layers = self.config['sensors']['functions'] + self.config['brain']['hidden_layers'] + self.config['actuators']['functions']
+        self.brain = np.array(create_random_brain(layers, self.config['brain']['connections']))
 
         # physical properties
         self.body = []
@@ -67,34 +70,6 @@ class DNA:
             properties[name] = value
 
         return properties
-
-    def get_brain_architecture(self):
-        nn_architecture = []
-        n_inputs = 0
-        for i in range(len(self.config['sensors']['functions'])):
-            n_inputs += self.config['sensors']['functions'][i][1]
-
-        n_outputs = 0
-        for i in range(len(self.config['actuators']['functions'])):
-            n_outputs += self.config['actuators']['functions'][i][1]
-
-        input_dim = n_inputs
-
-        # add hidden layers
-        for layer_config in self.config['brain']['hidden_layers']:
-            output_dim = layer_config[1]
-            activation = layer_config[2]
-            nn_architecture.append(
-                {"input_dim": input_dim, "output_dim": output_dim, "activation": activation}
-            )
-            input_dim = output_dim
-
-        # add output layer
-        nn_architecture.append(
-            {"input_dim": input_dim, "output_dim": n_outputs, "activation": self.config['brain']['output_activation']}
-        )
-
-        return nn_architecture
 
     def reproduce(self, other=None):
         brain = self.brain.copy() if other is None else (self.brain + other.brain) / 2

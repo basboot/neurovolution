@@ -25,7 +25,7 @@ class Creature:
         self.state['actuators'] = self.state['dna'].get_actuators()
         self.state['properties'] = self.state['dna'].get_properties()
 
-        self.state['brain'] = Brain(self.state['dna'].get_brain_architecture(), self.state['dna'].brain)
+        self.state['brain'] = Brain(config, self.state['dna'].brain)
 
 
 
@@ -46,25 +46,27 @@ class Creature:
         # TODO: implement brain
 
         # dummy outputs 0-1
-        outputs = self.state['brain'].forward_propagation(inputs)
+        outputs = self.state['brain'].full_forward_propagation(inputs)
         # for actuator in self.state['actuators']:
         #     outputs += [random.random() for _ in range(actuator[1])]
         return outputs
 
     def get_sensors(self, simulation, world):
         # update sensors
-        inputs = []
+        inputs = {}
 
+        # TODO: we could skip unused sensors, because the brains inits unknown sensors to zero
         for sensor in self.state['sensors']:
-            inputs += use_sensor(sensor[0], sensor[1], sensor[2], simulation, world, self)
+            value = use_sensor(sensor[0], sensor[1], sensor[2], simulation, world, self)
+            inputs[sensor[0]] = np.reshape(value, (sensor[1], 1))
 
         # return sensordata as column vector for nn
-        return np.reshape(inputs, (len(inputs), 1))
+        return inputs
 
     def use_actuators(self, outputs, simulation, world):
         output_start = 0
         for actuator in self.state['actuators']:
-            use_actuator(actuator[0], actuator[2], outputs[output_start:actuator[1]], simulation, world, self)
+            use_actuator(actuator[0], actuator[2], outputs[actuator[0]], simulation, world, self)
 
     def reproduce(self, other=None, same_location=True, share_energy=True):
         new_dna = self.state['dna'].reproduce(other)
