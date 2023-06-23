@@ -92,7 +92,7 @@ class Brain:
 
         # apply activation to all actuators and return values
         outputs = {}
-        for actuator_name, _, actuator_activation in self.config['actuators']['functions']:
+        for actuator_name, _, actuator_activation, _ in self.config['actuators']['functions']:
             if actuator_activation == "relu":
                 outputs[actuator_name] = relu(memory[actuator_name])
             elif actuator_activation == "sigmoid":

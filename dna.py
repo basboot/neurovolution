@@ -25,13 +25,13 @@ class DNA:
         self.body = []
 
         # put random value 0-1 for each sensor in dna
-        for _ in self.config['sensors']['functions']:
-            value = random.random()
+        for sensor in self.config['sensors']['functions']:
+            value = 1 if sensor[3] else random.random()
             self.body.append(value)
 
         # put random value 0-1 for each actuator in dna
-        for _ in self.config['actuators']['functions']:
-            value = random.random()
+        for actuator in self.config['actuators']['functions']:
+            value = 1 if actuator[3] else random.random()
             self.body.append(value)
 
         # put random values in configured range in dna
@@ -47,7 +47,7 @@ class DNA:
         for i in range(len(self.config['sensors']['functions'])):
             sensors.append((self.config['sensors']['functions'][i][0],
                             self.config['sensors']['functions'][i][1],
-                            self.body[i] > 0.5))
+                            self.body[i] > 0.5 or self.config['sensors']['functions'][i][3]))
         return sensors
 
     def get_actuators(self):
@@ -55,7 +55,7 @@ class DNA:
         for i in range(len(self.config['actuators']['functions'])):
             actuators.append((self.config['actuators']['functions'][i][0],
                               self.config['actuators']['functions'][i][1],
-                              self.body[i + len(self.config['sensors']['functions'])] > 0.5))
+                              self.body[i + len(self.config['sensors']['functions'])] > 0.5 or self.config['actuators']['functions'][i][3]))
         return actuators
 
     def get_properties(self):

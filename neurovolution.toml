@@ -42,20 +42,22 @@ max_terrain_height = 3000
 # configformat: 'functionname', number of outputs
 functions = [
 #    ['heartbeat', 1, 'None'],
-    ['is_standing_on_grass', 1, 'None'],
-    ['four_random_values', 4, 'None'],
-    ['random_0_or_1', 1, 'None'],
-#    ['find_middle', 4, 'None]
+    ['is_standing_on_grass', 1, 'None', false],
+    ['four_random_values', 4, 'None', false],
+    ['random_0_or_1', 1, 'None', false],
+#    ['find_middle', 4, 'None, false]
+    ['always_on', 1, 'None', true]
 ]
 
 [actuators]
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-#    ['move', 4, 'sigmoid'],
-    ['reproduce', 1, 'sigmoid'],
-    ['eat_grass', 1, 'sigmoid'],
-    ['small_move',1, 'sigmoid'],
+#    ['move', 4, 'sigmoid', false],
+    ['reproduce', 1, 'sigmoid', false],
+    ['eat_grass', 1, 'sigmoid', false],
+    ['small_move',1, 'sigmoid', false],
+    ['die', 1, 'None', true]
 ]
 
 [dna]
@@ -92,6 +94,7 @@ connections = [
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
+    ['always_on', 'die']
 ]
 
 
