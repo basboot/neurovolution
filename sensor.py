@@ -27,6 +27,9 @@ def four_random_values(simulation, world, creature):
 def random_0_or_1(simulation, world, creature):
     return [1] if random.random() < 0.5 else [0]
 
+def always_on(simulation, world, creature):
+    return [1]
+
 
 def use_sensor(name, n_values, active, simulation, world, creature):
     if active:
