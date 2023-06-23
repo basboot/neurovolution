@@ -145,8 +145,17 @@ class Brain:
             # add output to memory
             memory[connection[1]] += output
 
-        # return memory so creature can read actuator values from it
-        return memory
+        # apply activation to all actuators and return values
+        outputs = {}
+        for actuator_name, _, actuator_activation in self.config['actuators']['functions']:
+            if actuator_activation == "relu":
+                outputs[actuator_name] = relu(memory[actuator_name])
+            elif actuator_activation == "sigmoid":
+                outputs[actuator_name] = sigmoid(memory[actuator_name])
+            else:
+                outputs[actuator_name] = memory[actuator_name]
+
+        return outputs
 
 
 
