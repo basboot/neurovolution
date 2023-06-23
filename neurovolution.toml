@@ -44,6 +44,7 @@ functions = [
 #    ['heartbeat', 1],
     ['is_standing_on_grass', 1],
     ['four_random_values', 4],
+    ['random_0_or_1', 1],
 #    ['find_middle', 4]
 ]
 

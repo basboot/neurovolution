@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 from world import World
@@ -21,6 +23,9 @@ def find_middle(simulation, world, creature):
 
 def four_random_values(simulation, world, creature):
     return [np.random.random() * 1.0 for _ in range(4)]
+
+def random_0_or_1(simulation, world, creature):
+    return [1] if random.random() < 0.5 else [0]
 
 
 def use_sensor(name, n_values, active, simulation, world, creature):
