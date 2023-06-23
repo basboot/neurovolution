@@ -18,9 +18,9 @@ generation_selection = 'middle'
 
 [creature]
 max_energy = 10
-energy_per_timestep = 1
+energy_per_timestep = 0.5
 energy_from_grass = 1.5
-energy_from_dirt = -1.5
+energy_from_dirt = -0.1
 min_energy_for_reproduction = 1
 
 [visualisation]
@@ -52,7 +52,7 @@ functions = [
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals
 functions = [
-    ['move', 4],
+#    ['move', 4],
     ['reproduce', 1],
     ['eat_grass', 1],
     ['small_move',1]
