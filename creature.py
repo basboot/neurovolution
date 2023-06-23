@@ -31,13 +31,7 @@ class Creature:
 
     def draw_creature(self, screen):
         #screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
-        # color depending on actuators
-        r = 255
-        g = 0 if ('eat_grass', 1, True) in self.state['actuators'] else 255
-        b = 0 if ('move', 4, True) in self.state['actuators'] else 255
-        if (r,g,b) == (255,255,255) : r=g=b=0
-
-        pygame.draw.circle(screen, (r,g,b), (int(self.state['position'][0]), int(self.state['position'][1])), max(1, self.state['energy']))
+        pygame.draw.circle(screen, (255, 0, 0), (int(self.state['position'][0]), int(self.state['position'][1])), max(1, self.state['energy']))
 
     def update(self, simulation, world):
         inputs = self.get_sensors(simulation, world)

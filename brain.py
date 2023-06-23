@@ -100,6 +100,10 @@ class Brain:
             else:
                 outputs[actuator_name] = memory[actuator_name]
 
+        # apply hardwired connections
+        for direct_connection in self.config['brain']['direct_connections']:
+            outputs[direct_connection[1]] = memory[direct_connection[0]]
+
         return outputs
 
 

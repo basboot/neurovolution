@@ -55,7 +55,7 @@ functions = [
 #    ['move', 4, 'sigmoid'],
     ['reproduce', 1, 'sigmoid'],
     ['eat_grass', 1, 'sigmoid'],
-    ['small_move',1, 'sigmoid']
+    ['small_move',1, 'sigmoid'],
 ]
 
 [dna]
@@ -80,11 +80,18 @@ output_activation = 'sigmoid'
 # every connection will get its own outxin parameters
 # note: the order they are defined is the order in which they will be calculated
 connections = [
-    ['is_standing_on_grass', 'layer_1'],
+    ['is_standing_on_grass', 'eat_grass'],
     ['four_random_values', 'layer_1'],
     ['random_0_or_1', 'layer_1'],
     ['layer_1', 'small_move'],
     ['layer_1', 'reproduce'],
     ['layer_1', 'eat_grass'],
 ]
+
+# define connections that bypass the brain: [sensor, actuator]
+# there will be no weight, bias or activation out == in, so dimensions must match!
+# note: sensors/actuators will still respect if they are active in the dna
+direct_connections = [
+]
+
 
