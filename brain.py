@@ -3,6 +3,9 @@
 import numpy as np
 
 def create_random_brain(layers, nn_connections, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+
     nn_layers = {}
     for layer in layers:
         nn_layers[layer[0]] = layer[1:]
