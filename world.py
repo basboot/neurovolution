@@ -36,7 +36,7 @@ class World:
                 elif random.random()<0.1:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
-                    self.grass_length[row][col] = random.randint(1, self.max_grass_length)
+                    self.grass_length[row][col] = random.randint(5, self.max_grass_length)
 
 
     def eat_grass(self,row,col):
