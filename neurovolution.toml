@@ -31,7 +31,7 @@ interval = 1
 
 [world_parameters]
 size = 512
-grass_growing_speed = 0.01
+grass_growing_speed = 0.1
 max_grass_length = 5
 grass_eat_speed = 1
 max_water_depth = 1000
@@ -43,6 +43,7 @@ max_terrain_height = 3000
 functions = [
 #    ['heartbeat', 1, 'None'],
     ['is_standing_on_grass', 1, 'None'],
+    ['is_not_standing_on_grass', 1, 'None'],
     ['four_random_values', 4, 'None'],
     ['random_0_or_1', 1, 'None'],
 #    ['find_middle', 4, 'None]
@@ -86,5 +87,6 @@ connections = [
     ['layer_1', 'small_move'],
     ['layer_1', 'reproduce'],
     ['layer_1', 'eat_grass'],
+    ['is_not_standing_on_grass', 'small_move']
 ]
 
