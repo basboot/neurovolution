@@ -35,7 +35,7 @@ class DNA:
             self.body.append(value)
 
         # put random values in configured range in dna
-        for property in self.config['dna']['properties']:
+        for property in self.config['body']['properties']:
             value = random.uniform(property[1], property[2])
             self.body.append(value)
 
@@ -60,8 +60,8 @@ class DNA:
 
     def get_properties(self):
         properties = {}
-        for i in range(len(self.config['dna']['properties'])):
-            property = self.config['dna']['properties'][i]
+        for i in range(len(self.config['body']['properties'])):
+            property = self.config['body']['properties'][i]
             name = property[0]
             value = self.body[i + len(self.config['sensors']['functions']) + len(self.config['actuators']['functions'])]
             if property[3]:
@@ -75,11 +75,11 @@ class DNA:
         brain = self.brain.copy() if other is None else (self.brain + other.brain) / 2
         body = self.body.copy() if other is None else (self.body + other.body) / 2
 
-        if np.random.random() < self.config['mutation']['brain']['p']:
-            brain = np.random.normal(brain, self.config['mutation']['brain']['sd'])
+        if np.random.random() < self.config['brain']['mutation']['p']:
+            brain = np.random.normal(brain, self.config['brain']['mutation']['sd'])
 
-        if np.random.random() < self.config['mutation']['body']['p']:
-            brain = np.random.normal(brain, self.config['mutation']['body']['sd'])
+        if np.random.random() < self.config['body']['mutation']['p']:
+            brain = np.random.normal(brain, self.config['body']['mutation']['sd'])
 
         return DNA(self.config, brain, body)
 

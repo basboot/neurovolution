@@ -61,17 +61,15 @@ functions = [
     ['die', 1, 'None', true]
 ]
 
-[dna]
+[body]
 # 'name', min, max, rounded
 properties = [
     ['heartbeat', 1, 10, true]
 ]
-
-[mutation]
-brain = {p = 0.5, sd = 0.25}
-body = {p = 0.5, sd = 0.5}
+mutation = {p = 0.5, sd = 0.5}
 
 [brain]
+mutation = {p = 0.5, sd = 0.25}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
 hidden_layers = [
