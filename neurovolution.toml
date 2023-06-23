@@ -43,6 +43,7 @@ max_terrain_height = 3000
 functions = [
 #    ['heartbeat', 1, 'None'],
     ['is_standing_on_grass', 1, 'None', false],
+    ['is_not_standing_on_grass', 1, 'None', false],
     ['four_random_values', 4, 'None', false],
     ['random_0_or_1', 1, 'None', false],
 #    ['find_middle', 4, 'None, false]
@@ -82,12 +83,13 @@ output_activation = 'sigmoid'
 # every connection will get its own outxin parameters
 # note: the order they are defined is the order in which they will be calculated
 connections = [
-    ['is_standing_on_grass', 'eat_grass'],
+    ['is_standing_on_grass', 'layer_1'],
     ['four_random_values', 'layer_1'],
     ['random_0_or_1', 'layer_1'],
     ['layer_1', 'small_move'],
     ['layer_1', 'reproduce'],
     ['layer_1', 'eat_grass'],
+    ['is_not_standing_on_grass', 'small_move']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]

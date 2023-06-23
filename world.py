@@ -33,6 +33,11 @@ class World:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
                     self.grass_length[row][col] = random.randint(1,self.max_grass_length)
+                elif random.random()<0.1:
+                    tile_value = self.GRASS
+                    self.grid[row][col] = tile_value
+                    self.grass_length[row][col] = random.randint(5, self.max_grass_length)
+
 
     def eat_grass(self,row,col):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
@@ -44,12 +49,14 @@ class World:
 
 
 
+
     def update(self):
         for row in range(self.size):
             for col in range(self.size):
                 tile_value = self.grid[row][col]
                 if tile_value == self.GRASS:
                     self.grass_length[row][col] = min(self.grass_length[row][col]+ self.grass_growing_speed, self.max_grass_length)
+
 
 
 

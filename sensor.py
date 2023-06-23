@@ -13,6 +13,11 @@ def is_standing_on_grass(simulation, world, creature):
                                                         int(creature.state['position'][1]))
     return [1] if information == World.GRASS else [0]
 
+def is_not_standing_on_grass(simulation, world, creature):
+    information = world.give_information_about_location(int(creature.state['position'][0]),
+                                                        int(creature.state['position'][1]))
+    return [1] if information != World.GRASS else [0]
+
 def find_middle(simulation, world, creature):
     x_middle = creature.config['world_parameters']['size'] / 2
     y_middle = creature.config['world_parameters']['size'] / 2
