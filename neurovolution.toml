@@ -54,7 +54,8 @@ functions = [
 functions = [
     ['move', 4],
     ['reproduce', 1],
-    ['eat_grass', 1]
+    ['eat_grass', 1],
+    ['small_move',1]
 ]
 
 [dna]
