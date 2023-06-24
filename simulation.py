@@ -1,5 +1,7 @@
 import random
 
+import numpy as np
+
 import stopwatch
 from creature import Creature
 from selection import is_selected
@@ -11,6 +13,10 @@ class Simulation:
     def __init__(self, config):
         self.debug = config['application']['debug']
         self.config = config
+
+        if config['simulation']['seed'] > -1:
+            random.seed(config['simulation']['seed'])
+            np.random.seed(config['simulation']['seed'])
 
         self.world = World(config)
 
