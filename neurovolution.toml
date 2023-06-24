@@ -75,7 +75,6 @@ mutation = {p = 0.5, sd = 0.25}
 hidden_layers = [
     ['layer_1', 5, 'relu']
 ]
-output_activation = 'sigmoid'
 
 # define connections: [sensor, hidden_layer], [hidden_layer, actuator] or [sensor, actuator]
 # every connection will get its own outxin parameters
