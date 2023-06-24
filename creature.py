@@ -3,6 +3,7 @@ import random
 import numpy as np
 import pygame
 
+import stopwatch
 from actuator import use_actuator
 from brain import Brain
 from dna import DNA
@@ -34,9 +35,15 @@ class Creature:
         pygame.draw.circle(screen, (255, 0, 0), (int(self.state['position'][0]), int(self.state['position'][1])), max(1, self.state['energy']))
 
     def update(self, simulation, world):
+        stopwatch.start("sensors")
         inputs = self.get_sensors(simulation, world)
+        stopwatch.stop("sensors")
+        stopwatch.start("brain")
         outputs = self.use_brain(inputs)
+        stopwatch.stop("brain")
+        stopwatch.start("actuators")
         self.use_actuators(outputs, simulation, world)
+        stopwatch.stop("actuators")
 
         self.state['energy'] -= self.config['creature']['energy_per_timestep']
 

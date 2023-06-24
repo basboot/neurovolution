@@ -4,7 +4,7 @@ version = 0.1
 debug = true
 
 [simulation]
-max_iterations = 10000
+max_iterations = 25
 n_creatures = 1000
 max_creatures = 10000
 min_creatures = 10

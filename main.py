@@ -1,5 +1,6 @@
 import tomli
 
+import stopwatch
 from visualisation import Visualisation
 from simulation import Simulation
 
@@ -10,6 +11,13 @@ if __name__ == '__main__':
 
     print(f"Start {config['application']['name']} {config['application']['version']}")
 
+
     simulation = Simulation(config)
 
+    stopwatch.start("simulation")
+
     simulation.run(config['simulation']['max_iterations'])
+
+    stopwatch.stop("simulation")
+
+    stopwatch.show()

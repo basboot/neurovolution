@@ -1,5 +1,6 @@
 import random
 
+import stopwatch
 from creature import Creature
 from selection import is_selected
 from visualisation import Visualisation
@@ -60,13 +61,18 @@ class Simulation:
                     and self.simulation_step % self.config['simulation']['generation_lifespan'] == 0:
                 self.repopulate(self.config['simulation']['generation_selection'])
 
+            stopwatch.start("world_update")
             self.world.update()
+            stopwatch.stop("world_update")
 
+            stopwatch.start("creatures_update")
             for creature in self.creatures:
                 creature.update(self, self.world)
                 if creature.state['energy'] < 0:
                     self.dead_creatures.append(creature)
+            stopwatch.stop("creatures_update")
 
+            stopwatch.start("creatures_population_changes")
             # add new creatues
             self.creatures += self.born_creatures
             print(f"{len(self.born_creatures)} born")
@@ -84,12 +90,15 @@ class Simulation:
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
                 self.creatures.append(Creature(self.config))
+            stopwatch.stop("creatures_population_changes")
 
+            stopwatch.start("visualisation")
             # show
             if self.visualisation is not None:
                 self.visualisation.update(self.world, self.creatures)
 
             print(f"{len(self.creatures)} creatures")
+            stopwatch.stop("visualisation")
 
     def add_creature(self, creature):
         self.born_creatures.append(creature)
