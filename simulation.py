@@ -43,16 +43,18 @@ class Simulation:
             if is_selected(selection_function, creature):
                 survivors.append(creature)
 
-        if len(survivors) == 0:
-            print("No creatures met the selection criterium, run another epoch with same creatures")
-            return
-
         print(f"{len(survivors) / self.config['simulation']['generation_size'] * 100}% survivors")
-
         self.creatures = []
-        for _ in range(self.config['simulation']['generation_size']):
-            survivor = random.choice(survivors)
-            self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
+
+        if len(survivors) == 0:
+            print("No creatures met the selection criterium, restart sim")
+            self.creatures = []
+            for _ in range(self.config['simulation']['generation_size']):
+                self.creatures.append(Creature(self.config))
+        else:
+            for _ in range(self.config['simulation']['generation_size']):
+                survivor = random.choice(survivors)
+                self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
 
     def run(self, max_iterations):
         # simulation loop

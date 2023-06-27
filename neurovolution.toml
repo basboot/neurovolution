@@ -4,8 +4,8 @@ version = 0.2
 debug = true
 
 [simulation]
-max_iterations = 1000
-n_creatures = 10000
+max_iterations = 10000
+n_creatures = 1000 # initial number of creatures
 max_creatures = 10000
 min_creatures = -1
 # if value > -1 this value will be used to seed the random generators
@@ -13,7 +13,7 @@ seed = -1
 
 # for testing the learning capacity. don't forget to disable dying and reproducing if you use it.
 force_new_generation = true
-generation_size = 10000
+generation_size = 1000
 generation_lifespan = 100
 generation_selection = 'at_breeding_ground'
 
