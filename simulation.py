@@ -5,7 +5,7 @@ import numpy as np
 
 import stopwatch
 from creature import Creature
-from selection import is_selected
+from selection import is_selected, get_selection_weight
 from visualisation import Visualisation
 from world import World
 
@@ -38,6 +38,21 @@ class Simulation:
         print('left_upper_corner')
 
     def repopulate(self, selection_function):
+        if not self.config['simulation']['weighted_selection']:
+            self.repopulate_no_weights(selection_function)
+
+        else:
+            weights = []
+            for creature in self.creatures:
+                weights.append(get_selection_weight(selection_function, creature))
+
+            survivors = random.choices(self.creatures, weights=weights, k=self.config['simulation']['generation_size'])
+
+            self.creatures = []
+            for survivor in survivors:
+                self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
+
+    def repopulate_no_weights(self, selection_function):
         survivors = []
         for creature in self.creatures:
             if is_selected(selection_function, creature):
@@ -55,6 +70,7 @@ class Simulation:
             for _ in range(self.config['simulation']['generation_size']):
                 survivor = random.choice(survivors)
                 self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
+
 
     def run(self, max_iterations):
         # simulation loop

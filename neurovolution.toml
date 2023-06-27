@@ -16,6 +16,7 @@ force_new_generation = true
 generation_size = 1000
 generation_lifespan = 100
 generation_selection = 'at_breeding_ground'
+weighted_selection = true # false = only creatures that meet the criterium survive
 
 
 [creature]
