@@ -2,6 +2,7 @@ import math
 import random
 
 import numpy as np
+import pygame
 
 import stopwatch
 from creature import Creature
@@ -147,7 +148,7 @@ class Simulation:
             stopwatch.start("visualisation")
             # show
             if self.visualisation is not None:
-                self.visualisation.update(self.world, self.creatures)
+                self.visualisation.update(self.world, self.creatures, self)
 
             print(f"{len(self.creatures)} creatures")
             stopwatch.stop("visualisation")
@@ -159,3 +160,8 @@ class Simulation:
         x = max(0, min(position[0], self.config['world_parameters']['size'] - 1))
         y = max(0, min(position[1], self.config['world_parameters']['size'] - 1))
         return (x, y)
+
+    def draw_simulation(self, screen):
+        font = pygame.font.SysFont('arial', 32)
+        text_surface = font.render(f"generation {self.generation}", False, (0, 0, 0))
+        screen.blit(text_surface, (10, 10))

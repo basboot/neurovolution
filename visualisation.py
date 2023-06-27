@@ -8,7 +8,7 @@ class Visualisation:
         self.frame = 0
         self.interval = interval
 
-    def update(self, world, creatures):
+    def update(self, world, creatures, simulation):
         self.frame += 1
         if self.frame % self.interval > 0:
             return
@@ -22,6 +22,8 @@ class Visualisation:
 
         for creature in creatures:
             creature.draw_creature(self.screen)
+
+        simulation.draw_simulation(self.screen)
 
         pygame.display.flip()
         self.clock.tick(self.framerate)
