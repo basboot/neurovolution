@@ -9,6 +9,7 @@ class World:
     TREE = 3
     ROCK = 4
     SEA = 5
+    BREEDING = 6
     # kadaver
     # luchtje
 
@@ -29,14 +30,13 @@ class World:
     def make_random_world(self):
         for row in range(self.size):
             for col in range(self.size):
-                if row < 0.1 * self.size or row > 0.9 * self.size:
+                if col < self.size / 4:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
-                    self.grass_length[row][col] = random.randint(1,self.max_grass_length)
-                elif random.random()<0.1:
-                    tile_value = self.GRASS
+                    self.grass_length[row][col] = self.max_grass_length
+                if col > 3 * self.size / 4:
+                    tile_value = self.BREEDING
                     self.grid[row][col] = tile_value
-                    self.grass_length[row][col] = random.randint(5, self.max_grass_length)
 
 
     def eat_grass(self,row,col):
@@ -66,8 +66,13 @@ class World:
                 tile_value = self.grid[row][col]
                 if tile_value == self.GRASS:
                     length = self.grass_length[row][col]
-                    color = (0, 255 - length * 10 ,0)
+                    color = (0,255,0)
                     screen.set_at((row,col), color)
+                if tile_value == self.BREEDING:
+                    length = self.grass_length[row][col]
+                    color = (255, 255, 0)
+                    screen.set_at((row, col), color)
+
 
 
 
