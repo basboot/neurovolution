@@ -32,12 +32,15 @@ class Simulation:
         self.simulation_step = 0
 
         self.season_clock = 0
+        self.generation = 0
 
 
     def left_upper_corner(self):
         print('left_upper_corner')
 
     def repopulate(self, selection_function):
+        self.generation += 1
+        print(f"START GENERATION {self.generation}")
         if not self.config['simulation']['weighted_selection']:
             self.repopulate_no_weights(selection_function)
 
