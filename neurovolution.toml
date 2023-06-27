@@ -59,12 +59,15 @@ functions = [
 [actuators]
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals, activation function, true=always on|false=evolution
+# Note: actuators will be actuated, after all sensors have been read. Id actuators alter the world/state this
+#  mights lead to problems. They are actuated in order of the array however, so shifting them might prevent
+#  this.
 functions = [
-    ['move', 4, 'sigmoid', false],
 #    ['reproduce', 1, 'sigmoid', false],
     ['eat_grass', 1, 'sigmoid', false],
 #    ['small_move',1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
+     ['move', 4, 'sigmoid', false],
 ]
 
 [body]
@@ -80,7 +83,7 @@ mutation = {p = 0.8, sd = 0.25}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
 hidden_layers = [
-    ['layer_1', 5, 'relu']
+#    ['layer_1', 5, 'relu']
 ]
 
 # define connections: [sensor, hidden_layer], [hidden_layer, actuator] or [sensor, actuator]
