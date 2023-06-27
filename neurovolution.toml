@@ -4,7 +4,7 @@ version = 0.2
 debug = true
 
 [simulation]
-max_iterations = 10000
+max_iterations = 100000
 n_creatures = 1000 # initial number of creatures
 max_creatures = 10000
 min_creatures = -1
@@ -24,7 +24,7 @@ initial_energy = 10
 max_energy = 100
 energy_per_timestep = 0.11
 energy_from_grass = 1.5
-energy_from_dirt = -0.1
+energy_from_dirt = 0
 min_energy_for_reproduction = 1
 
 [visualisation]
@@ -53,6 +53,7 @@ functions = [
 #    ['find_middle', 4, 'None, false]
 #    ['always_on', 1, 'None', true]
     ['internal_clock', 1, 'None', false],
+#    ['energy_level', 1, 'None', false]
 ]
 
 [actuators]
@@ -69,12 +70,13 @@ functions = [
 [body]
 # 'name', min, max, rounded
 properties = [
-    ['heartbeat', 1, 10, true]
+    ['heartbeat', 1, 10, true],
+    ['ploidy', 1, 2, true]
 ]
-mutation = {p = 0.5, sd = 0.5}
+mutation = {p = 0.8, sd = 0.25}
 
 [brain]
-mutation = {p = 0.5, sd = 0.25}
+mutation = {p = 0.8, sd = 0.25}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
 hidden_layers = [
@@ -92,7 +94,10 @@ connections = [
 #    ['layer_1', 'reproduce'],
 #    ['layer_1', 'eat_grass'],
 #    ['is_not_standing_on_grass', 'small_move']
-    ['internal_clock', 'move']
+    ['internal_clock', 'move'],
+#    ['is_standing_on_grass', 'layer_1'],
+#    ['layer_1', 'move'],
+#    ['is_standing_on_grass', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]

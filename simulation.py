@@ -49,11 +49,25 @@ class Simulation:
             for creature in self.creatures:
                 weights.append(get_selection_weight(selection_function, creature))
 
-            survivors = random.choices(self.creatures, weights=weights, k=self.config['simulation']['generation_size'])
+            survivors = self.creatures
+
 
             self.creatures = []
-            for survivor in survivors:
-                self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
+            while len(self.creatures) < self.config['simulation']['generation_size']:
+                # use k = 1, so it is easier to mix strategies
+                survivor = random.choices(survivors, weights=weights, k=1)[0]
+
+                if survivor.state['properties']['ploidy'] == 1:
+                    self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
+                else:
+                    if survivor.state['properties']['ploidy'] == 2:
+                        # this must be optimized
+                        # find mate
+                        mate = None
+                        while mate is None or mate.state['properties']['ploidy'] != 2:
+                            mate = random.choices(survivors, weights=weights, k=1)[0]
+                            self.creatures.append(survivor.reproduce(other=mate.state['dna'], same_location=True, share_energy=False))
+
 
     def repopulate_no_weights(self, selection_function):
         survivors = []
