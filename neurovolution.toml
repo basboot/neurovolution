@@ -5,22 +5,23 @@ debug = true
 
 [simulation]
 max_iterations = 1000
-n_creatures = 100
+n_creatures = 10000
 max_creatures = 10000
-min_creatures = 10
+min_creatures = -1
 # if value > -1 this value will be used to seed the random generators
 seed = -1
 
 # for testing the learning capacity. don't forget to disable dying and reproducing if you use it.
 force_new_generation = true
-generation_size = 100
+generation_size = 10000
 generation_lifespan = 100
 generation_selection = 'at_breeding_ground'
 
 
 [creature]
-max_energy = 10
-energy_per_timestep = 0.0
+initial_energy = 10
+max_energy = 100
+energy_per_timestep = 0.11
 energy_from_grass = 1.5
 energy_from_dirt = -0.1
 min_energy_for_reproduction = 1
@@ -44,7 +45,7 @@ max_terrain_height = 3000
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
 #    ['heartbeat', 1, 'None'],
-#    ['is_standing_on_grass', 1, 'None', false],
+    ['is_standing_on_grass', 1, 'None', false],
 #    ['is_not_standing_on_grass', 1, 'None', false],
 #    ['four_random_values', 4, 'None', false],
 #    ['random_0_or_1', 1, 'None', false],
@@ -59,7 +60,7 @@ functions = [
 functions = [
     ['move', 4, 'sigmoid', false],
 #    ['reproduce', 1, 'sigmoid', false],
-#    ['eat_grass', 1, 'sigmoid', false],
+    ['eat_grass', 1, 'sigmoid', false],
 #    ['small_move',1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
 ]
@@ -97,7 +98,7 @@ connections = [
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
-#    ['always_on', 'die']
+    ['is_standing_on_grass', 'eat_grass']
 ]
 
 

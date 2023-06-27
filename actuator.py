@@ -21,6 +21,8 @@ def move(simulation, world, creature, signals):
     creature.state['position'] = [creature.state['position'][0],
                                   creature.state['position'][1] + signals[3] * 20]
 
+    # creature.state['energy'] -= ((abs(signals[0] - signals[1]) + abs(signals[2] - signals[3])) * 1)[0]
+
     # check world if move is possible
     creature.state['position'] = simulation.move(creature.state['position'])
 

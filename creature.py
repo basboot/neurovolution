@@ -18,7 +18,7 @@ class Creature:
             'position': (random.randrange(0, config['world_parameters']['size']),
                          random.randrange(0, config['world_parameters']['size'])),
             'dna': DNA(config) if dna is None else dna,
-            'energy': config['creature']['max_energy'],
+            'energy': config['creature']['initial_energy'],
         }
 
         # add sensors from DNA
@@ -32,7 +32,7 @@ class Creature:
 
     def draw_creature(self, screen):
         #screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
-        pygame.draw.circle(screen, (255, 0, 0), (int(self.state['position'][0]), int(self.state['position'][1])), max(1, self.state['energy']))
+        pygame.draw.circle(screen, (255, 0, 0), (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
 
     def update(self, simulation, world):
         stopwatch.start("sensors")

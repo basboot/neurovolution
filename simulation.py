@@ -52,7 +52,7 @@ class Simulation:
         self.creatures = []
         for _ in range(self.config['simulation']['generation_size']):
             survivor = random.choice(survivors)
-            self.creatures.append(survivor.reproduce(other=None, same_location=False, share_energy=False))
+            self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
 
     def run(self, max_iterations):
         # simulation loop
