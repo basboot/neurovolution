@@ -24,7 +24,7 @@ initial_energy = 10
 max_energy = 100
 energy_per_timestep = 0.11
 energy_from_grass = 1.5
-energy_from_dirt = 0
+energy_from_dirt = -1500
 min_energy_for_reproduction = 1
 
 [visualisation]
@@ -73,7 +73,7 @@ functions = [
 [body]
 # 'name', min, max, rounded
 properties = [
-    ['heartbeat', 1, 10, true],
+#    ['heartbeat', 1, 10, true],
     ['ploidy', 1, 2, true]
 ]
 mutation = {p = 0.8, sd = 0.25}
@@ -100,14 +100,14 @@ connections = [
     ['internal_clock', 'move'],
 #    ['is_standing_on_grass', 'layer_1'],
 #    ['layer_1', 'move'],
-#    ['is_standing_on_grass', 'eat_grass']
+    ['is_standing_on_grass', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
-    ['is_standing_on_grass', 'eat_grass']
+#    ['is_standing_on_grass', 'eat_grass']
 ]
 
 
