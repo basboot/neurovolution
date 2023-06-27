@@ -18,6 +18,9 @@ def is_not_standing_on_grass(simulation, world, creature):
                                                         int(creature.state['position'][1]))
     return [1] if information != World.GRASS else [0]
 
+def energy_level(simulation, world, creature):
+    return creature.state['energy']
+
 def find_middle(simulation, world, creature):
     x_middle = creature.config['world_parameters']['size'] / 2
     y_middle = creature.config['world_parameters']['size'] / 2
