@@ -35,6 +35,9 @@ def random_0_or_1(simulation, world, creature):
 def always_on(simulation, world, creature):
     return [1]
 
+def internal_clock(simulation, world, creature):
+    return simulation.season_clock
+
 
 def use_sensor(name, n_values, active, simulation, world, creature):
     if active:

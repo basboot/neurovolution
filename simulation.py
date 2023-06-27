@@ -1,3 +1,4 @@
+import math
 import random
 
 import numpy as np
@@ -30,6 +31,9 @@ class Simulation:
         self.dead_creatures = []
         self.simulation_step = 0
 
+        self.season_clock = 0
+
+
     def left_upper_corner(self):
         print('left_upper_corner')
 
@@ -57,6 +61,13 @@ class Simulation:
 
         while self.simulation_step < max_iterations:
             self.simulation_step += 1
+
+            # update clock
+            t = (self.simulation_step % self.config['simulation']['generation_lifespan']) \
+                / self.config['simulation']['generation_lifespan'] * math.pi * 2
+
+            self.season_clock = math.sin(t)
+
 
             if self.debug:
                 print(f"Simulation step: {self.simulation_step}")

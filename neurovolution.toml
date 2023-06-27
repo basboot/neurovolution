@@ -1,33 +1,33 @@
 [application]
 name = "Neurovolution"
-version = 0.1
+version = 0.2
 debug = true
 
 [simulation]
 max_iterations = 1000
-n_creatures = 1000
+n_creatures = 100
 max_creatures = 10000
 min_creatures = 10
 # if value > -1 this value will be used to seed the random generators
 seed = -1
 
 # for testing the learning capacity. don't forget to disable dying and reproducing if you use it.
-force_new_generation = false
-generation_size = 1000
+force_new_generation = true
+generation_size = 100
 generation_lifespan = 100
-generation_selection = 'middle'
+generation_selection = 'at_breeding_ground'
 
 
 [creature]
 max_energy = 10
-energy_per_timestep = 0.5
+energy_per_timestep = 0.0
 energy_from_grass = 1.5
 energy_from_dirt = -0.1
 min_energy_for_reproduction = 1
 
 [visualisation]
 on = true
-size = [500, 500]
+size = [512, 512]
 framerate = 60
 interval = 1
 
@@ -44,23 +44,24 @@ max_terrain_height = 3000
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
 #    ['heartbeat', 1, 'None'],
-    ['is_standing_on_grass', 1, 'None', false],
-    ['is_not_standing_on_grass', 1, 'None', false],
-    ['four_random_values', 4, 'None', false],
-    ['random_0_or_1', 1, 'None', false],
+#    ['is_standing_on_grass', 1, 'None', false],
+#    ['is_not_standing_on_grass', 1, 'None', false],
+#    ['four_random_values', 4, 'None', false],
+#    ['random_0_or_1', 1, 'None', false],
 #    ['find_middle', 4, 'None, false]
 #    ['always_on', 1, 'None', true]
+    ['internal_clock', 1, 'None', false],
 ]
 
 [actuators]
 # all actuator functions must be defined in actuator.py
 # configformat: 'functionname', number of input signals, activation function, true=always on|false=evolution
 functions = [
-#    ['move', 4, 'sigmoid', false],
-    ['reproduce', 1, 'sigmoid', false],
-    ['eat_grass', 1, 'sigmoid', false],
-    ['small_move',1, 'sigmoid', false],
-    ['die', 1, 'None', true]
+    ['move', 4, 'sigmoid', false],
+#    ['reproduce', 1, 'sigmoid', false],
+#    ['eat_grass', 1, 'sigmoid', false],
+#    ['small_move',1, 'sigmoid', false],
+#    ['die', 1, 'None', true]
 ]
 
 [body]
@@ -82,13 +83,14 @@ hidden_layers = [
 # every connection will get its own outxin parameters
 # note: the order they are defined is the order in which they will be calculated
 connections = [
-    ['is_standing_on_grass', 'layer_1'],
-    ['four_random_values', 'layer_1'],
-    ['random_0_or_1', 'layer_1'],
-    ['layer_1', 'small_move'],
-    ['layer_1', 'reproduce'],
-    ['layer_1', 'eat_grass'],
-    ['is_not_standing_on_grass', 'small_move']
+#    ['is_standing_on_grass', 'layer_1'],
+#    ['four_random_values', 'layer_1'],
+#    ['random_0_or_1', 'layer_1'],
+#    ['layer_1', 'small_move'],
+#    ['layer_1', 'reproduce'],
+#    ['layer_1', 'eat_grass'],
+#    ['is_not_standing_on_grass', 'small_move']
+    ['internal_clock', 'move']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
