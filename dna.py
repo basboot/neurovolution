@@ -79,7 +79,7 @@ class DNA:
             brain = np.random.normal(brain, self.config['brain']['mutation']['sd'])
 
         if np.random.random() < self.config['body']['mutation']['p']:
-            brain = np.random.normal(brain, self.config['body']['mutation']['sd'])
+            body = np.random.normal(body, self.config['body']['mutation']['sd'])
 
         return DNA(self.config, brain, body)
 
