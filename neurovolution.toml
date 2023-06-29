@@ -7,7 +7,7 @@ debug = true
 max_iterations = 100000
 n_creatures = 1000 # initial number of creatures
 max_creatures = 10000
-min_creatures = -1
+min_creatures = 10
 # if value > -1 this value will be used to seed the random generators
 seed = -1
 
@@ -20,8 +20,8 @@ weighted_selection = true # false = only creatures that meet the criterium survi
 
 
 [creature]
-initial_energy = 10
-max_energy = 100
+initial_energy = 100
+max_energy = 1000
 energy_per_timestep = 0.11
 energy_from_grass = 1.5
 energy_from_dirt = -1500
