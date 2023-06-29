@@ -20,6 +20,8 @@ class World:
         self.grass_eat_speed = config['world_parameters']['grass_eat_speed']
         self.max_grass_length = config['world_parameters']['max_grass_length']
         self.max_terrain_height = config['world_parameters']['max_terrain_height']
+        self.max_temperature = config['world_parameters']['max_temperature']
+        self.min_temperature = config['world_parameters']['min_temperature']
 
         self.size = config['world_parameters']['size']
         self.grid = [[self.EMPTY for _ in range(size)] for _ in range(size)]
@@ -82,5 +84,12 @@ class World:
 
         tile_value = self.grid[row][col]
         return tile_value
+
+    def give_information_about_temperature(self, row, col,time):
+        if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
+            return -1
+
+        temp = self.min_temperature + (self.max_temperature - self.min_temperature) * (row+col) / (2*self.size)
+        return temp
 
 
