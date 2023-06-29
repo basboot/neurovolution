@@ -55,6 +55,7 @@ functions = [
 #    ['find_middle', 4, 'None, false]
 #    ['always_on', 1, 'None', true]
     ['internal_clock', 1, 'None', false],
+
 #    ['energy_level', 1, 'None', false]
 ]
 

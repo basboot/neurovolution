@@ -54,7 +54,10 @@ class Creature:
         self.use_actuators(outputs, simulation, world)
         stopwatch.stop("actuators")
 
-        self.state['energy'] -= self.config['creature']['energy_per_timestep']
+
+        temp = world.give_information_about_temperature(self.state['position'][0],self.state['position'][0],0)
+        factor = 1 if 5 < temp < 25 else 2
+        self.state['energy'] -= self.config['creature']['energy_per_timestep']*factor
 
         self.state['energy'] = min(self.state['energy'], self.config['creature']['max_energy'])
 
