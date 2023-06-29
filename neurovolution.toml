@@ -36,10 +36,12 @@ interval = 1
 [world_parameters]
 size = 512
 grass_growing_speed = 0.01
-max_grass_length = 5
+max_grass_length = 1
 grass_eat_speed = 1
 max_water_depth = 1000
 max_terrain_height = 3000
+max_temperature = 30
+min_temperature = 0
 
 [sensors]
 # all sensor functions must be defined in sensor.py
