@@ -157,9 +157,7 @@ class Simulation:
         self.born_creatures.append(creature)
 
     def move(self, position):
-        x = max(0, min(position[0], self.config['world_parameters']['size'] - 1))
-        y = max(0, min(position[1], self.config['world_parameters']['size'] - 1))
-        return (x, y)
+        return np.clip(position, 0, self.config['world_parameters']['size'] - 1)
 
     def draw_simulation(self, screen):
         font = pygame.font.SysFont('arial', 32)

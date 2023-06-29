@@ -15,8 +15,7 @@ class Creature:
         self.config = config
         self.state = {
             # TODO: move position select to simulation
-            'position': (random.randrange(0, config['world_parameters']['size']),
-                         random.randrange(0, config['world_parameters']['size'])),
+            'position': (np.random.uniform(0, config['world_parameters']['size'], (2, 1))),
             'dna': DNA(config) if dna is None else dna,
             'energy': config['creature']['initial_energy'],
         }
