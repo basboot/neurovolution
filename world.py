@@ -22,6 +22,7 @@ class World:
         self.max_terrain_height = config['world_parameters']['max_terrain_height']
         self.max_temperature = config['world_parameters']['max_temperature']
         self.min_temperature = config['world_parameters']['min_temperature']
+        self.delta_temperature = config['world_parameters']['delta_temperature']
 
         self.size = config['world_parameters']['size']
         self.grid = [[self.EMPTY for _ in range(size)] for _ in range(size)]
@@ -53,6 +54,9 @@ class World:
 
 
     def update(self):
+        self.min_temperature -= self.delta_temperature
+        self.max_temperature += self.delta_temperature
+
         for row in range(self.size):
             for col in range(self.size):
                 tile_value = self.grid[row][col]

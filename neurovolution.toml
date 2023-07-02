@@ -40,8 +40,9 @@ max_grass_length = 1
 grass_eat_speed = 1
 max_water_depth = 1000
 max_terrain_height = 3000
-max_temperature = 30
-min_temperature = 0
+max_temperature = 20
+min_temperature = 10
+delta_temperature = 0.001
 
 [sensors]
 # all sensor functions must be defined in sensor.py
