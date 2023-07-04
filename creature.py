@@ -34,14 +34,14 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        #screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
-        creature_color = (0, 0, 0)
-        if self.state['properties']['ploidy'] == 1:
-            creature_color = (255, 0, 0)
-        if self.state['properties']['ploidy'] == 2:
-            creature_color = (0, 0, 255)
-        pygame.draw.circle(screen, creature_color,
-                           (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
+        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
+        # creature_color = (0, 0, 0)
+        # if self.state['properties']['ploidy'] == 1:
+        #     creature_color = (255, 0, 0)
+        # if self.state['properties']['ploidy'] == 2:
+        #     creature_color = (0, 0, 255)
+        # pygame.draw.circle(screen, creature_color,
+        #                    (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
 
     def update(self, simulation, world):
         stopwatch.start("sensors")
