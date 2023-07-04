@@ -51,27 +51,30 @@ class World:
                     self.animal_grid[row][col] = tile_value
 
 
-    def add_rabbit(self, position):
+    def add_animal(self, position, animal):
+        # space is occupied, so cannot add animal
         if self.animal_grid[position[0]][position[1]] > 0:
             return False
         else:
-            self.animal_grid[position[0]][position[1]] = self.RABBIT
+            self.animal_grid[position[0]][position[1]] = animal
             return True
 
-    def remove_rabbit(self, position):
+    def remove_animal(self, position):
         if self.animal_grid[position[0]][position[1]] > 0:
             self.animal_grid[position[0]][position[1]] = 0
             return True
         else:
             return False
 
-    def move_rabbit(self, from_position, to_position):
-        if self.add_rabbit(to_position):
-            self.remove_rabbit(from_position)
-            return True
-        else:
-            return False
-
+    def move_animal(self, from_position, to_position, animal):
+        # check if animal is in this position
+        if self.animal_grid[from_position[0]][from_position[1]] == animal:
+            # check if animal can move to the other position
+            if self.add_animal(to_position, animal):
+                self.remove_animal(from_position)
+                return True
+            else:
+                return False
 
     def eat_grass(self,row,col):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
