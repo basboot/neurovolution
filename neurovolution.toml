@@ -1,19 +1,19 @@
 [application]
 name = "Neurovolution"
-version = 0.2
+version = 0.3
 debug = true
 
 [simulation]
 max_iterations = 100000
-n_creatures = 1000 # initial number of creatures
-max_creatures = 10000
+n_creatures = 250 # initial number of creatures
+max_creatures = 1000
 min_creatures = 10
 # if value > -1 this value will be used to seed the random generators
 seed = -1
 
 # for testing the learning capacity. don't forget to disable dying and reproducing if you use it.
-force_new_generation = true
-generation_size = 1000
+force_new_generation = false
+generation_size = 250
 generation_lifespan = 100
 generation_selection = 'at_breeding_ground'
 weighted_selection = true # false = only creatures that meet the criterium survive
@@ -29,12 +29,12 @@ min_energy_for_reproduction = 1
 
 [visualisation]
 on = true
-size = [512, 512]
+size = [256, 256]
 framerate = 60
 interval = 1
 
 [world_parameters]
-size = 512
+size = 256
 grass_growing_speed = 0.01
 max_grass_length = 1
 grass_eat_speed = 1
@@ -49,13 +49,13 @@ delta_temperature = 0.001
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
 #    ['heartbeat', 1, 'None'],
-    ['is_standing_on_grass', 1, 'None', false],
+#    ['is_standing_on_grass', 1, 'None', false],
 #    ['is_not_standing_on_grass', 1, 'None', false],
 #    ['four_random_values', 4, 'None', false],
 #    ['random_0_or_1', 1, 'None', false],
 #    ['find_middle', 4, 'None, false]
 #    ['always_on', 1, 'None', true]
-    ['internal_clock', 1, 'None', false],
+#    ['internal_clock', 1, 'None', false],
 
 #    ['energy_level', 1, 'None', false]
 ]
@@ -68,17 +68,17 @@ functions = [
 #  this.
 functions = [
 #    ['reproduce', 1, 'sigmoid', false],
-    ['eat_grass', 1, 'sigmoid', false],
+#    ['eat_grass', 1, 'sigmoid', false],
 #    ['small_move',1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
-     ['move', 4, 'sigmoid', false],
+#     ['move', 4, 'sigmoid', false],
 ]
 
 [body]
 # 'name', min, max, rounded
 properties = [
 #    ['heartbeat', 1, 10, true],
-    ['ploidy', 1, 2, true]
+#    ['ploidy', 1, 2, true]
 ]
 mutation = {p = 0.8, sd = 0.25}
 
@@ -101,10 +101,10 @@ connections = [
 #    ['layer_1', 'reproduce'],
 #    ['layer_1', 'eat_grass'],
 #    ['is_not_standing_on_grass', 'small_move']
-    ['internal_clock', 'move'],
+#    ['internal_clock', 'move'],
 #    ['is_standing_on_grass', 'layer_1'],
 #    ['layer_1', 'move'],
-    ['is_standing_on_grass', 'eat_grass']
+#    ['is_standing_on_grass', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
