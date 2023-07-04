@@ -28,9 +28,7 @@ def eat_grass(simulation, world, creature, signals):
     if signals[0] > 0.5:
         row = int(creature.state['position'][0])
         col = int(creature.state['position'][1])
-        information = world.give_information_about_location(row, col)
-        if information == World.GRASS:
-            world.eat_grass(row, col)
+        if world.eat_grass(row, col):
             creature.state['energy'] += creature.config['creature']['energy_from_grass']
         else:
             # eat dirt

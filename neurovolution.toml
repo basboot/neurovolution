@@ -103,7 +103,7 @@ connections = [
 #    ['internal_clock', 'move'],
 #    ['is_standing_on_grass', 'layer_1'],
 #    ['layer_1', 'move'],
-#    ['is_standing_on_grass', 'eat_grass']
+    ['look', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]

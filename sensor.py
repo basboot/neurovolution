@@ -15,8 +15,6 @@ def look(simulation, world, creature):
     # filter grass only (for now)
     information = np.equal(information, world.GRASS).astype(int)
 
-    print(information)
-
     return information
 
 def is_not_standing_on_grass(simulation, world, creature):

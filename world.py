@@ -74,11 +74,16 @@ class World:
 
     def eat_grass(self,row,col):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
-            return
+            return False
+
+        if self.grass_length[row][col] == 0:
+            return False
 
         self.grass_length[row][col] -= self.grass_eat_speed
         if self.grass_length[row][col] <= 0:
             self.grid[row][col] = self.EMPTY
+
+        return True
 
 
 
