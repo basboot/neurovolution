@@ -1,42 +1,23 @@
 import random
 
+import numpy as np
+
 from world import World
 
 
 def move(simulation, world, creature, signals):
-    # TODO: think about how to move. direction + angle? use world/sim to limit movement
-    # move left
-    creature.state['position'] = [creature.state['position'][0] - signals[0] * 20,
-                                  creature.state['position'][1]]
+    # world does not allow floats
+    signals = np.round(signals)
+    # combine signals to get desired delta / new position
+    desired_move = np.array([signals[0] - signals[1], signals[2] - signals[3]])
+    desired_position = creature.state['position'] + desired_move
 
-    # move right
-    creature.state['position'] = [creature.state['position'][0] + signals[1] * 20,
-                                  creature.state['position'][1]]
+    # make sure position in still inside simulation
+    desired_position = simulation.move(desired_position)
 
-    # move up
-    creature.state['position'] = [creature.state['position'][0],
-                                  creature.state['position'][1] - signals[2] * 20]
-
-    # move down
-    creature.state['position'] = [creature.state['position'][0],
-                                  creature.state['position'][1] + signals[3] * 20]
-
-    #speed = ((abs(signals[0] - signals[1]) + abs(signals[2] - signals[3])) * 1)[0]
-
-    #creature.state['energy'] -= (speed * speed)
-
-    # check world if move is possible
-    creature.state['position'] = simulation.move(creature.state['position'])
-
-def small_move(simulation, world, creature, signals):
-    dx = random.choice([-1,0,1])
-    dy = random.choice([-1,0,1])
-    # make small move
-    creature.state['position'] = [creature.state['position'][0] + dx ,
-                                  creature.state['position'][1] + dy]
-
-    # check world if move is possible
-    creature.state['position'] = simulation.move(creature.state['position'])
+    # check if world allows move
+    if world.move_animal(creature.state['position'], desired_position, animal=world.RABBIT):
+        creature.state['position'] = desired_position
 
 def reproduce(simulation, world, creature, signals):
     if signals[0] > 0.99 and creature.state['energy'] > creature.config['creature']['min_energy_for_reproduction']:

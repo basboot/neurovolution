@@ -52,7 +52,7 @@ functions = [
 #    ['heartbeat', 1, 'None'],
 #    ['is_standing_on_grass', 1, 'None', false],
 #    ['is_not_standing_on_grass', 1, 'None', false],
-#    ['four_random_values', 4, 'None', false],
+    ['four_random_values', 4, 'None', false],
 #    ['random_0_or_1', 1, 'None', false],
 #    ['find_middle', 4, 'None, false]
 #    ['always_on', 1, 'None', true]
@@ -70,9 +70,8 @@ functions = [
 functions = [
 #    ['reproduce', 1, 'sigmoid', false],
 #    ['eat_grass', 1, 'sigmoid', false],
-#    ['small_move',1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
-#     ['move', 4, 'sigmoid', false],
+     ['move', 4, 'sigmoid', false],
 ]
 
 [body]
@@ -96,7 +95,7 @@ hidden_layers = [
 # note: the order they are defined is the order in which they will be calculated
 connections = [
 #    ['is_standing_on_grass', 'layer_1'],
-#    ['four_random_values', 'layer_1'],
+    ['four_random_values', 'move'],
 #    ['random_0_or_1', 'layer_1'],
 #    ['layer_1', 'small_move'],
 #    ['layer_1', 'reproduce'],

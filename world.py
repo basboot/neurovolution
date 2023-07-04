@@ -49,22 +49,22 @@ class World:
 
     def add_animal(self, position, animal):
         # space is occupied, so cannot add animal
-        if self.animal_grid[position[0], position[1]] > 0:
+        if self.animal_grid[int(position[0]), int(position[1])] > 0:
             return False
         else:
-            self.animal_grid[position[0], position[1]] = animal
+            self.animal_grid[int(position[0]), int(position[1])] = animal
             return True
 
     def remove_animal(self, position):
-        if self.animal_grid[position[0], position[1]] > 0:
-            self.animal_grid[position[0], position[1]] = 0
+        if self.animal_grid[int(position[0]), int(position[1])] > 0:
+            self.animal_grid[int(position[0]), int(position[1])] = 0
             return True
         else:
             return False
 
     def move_animal(self, from_position, to_position, animal):
         # check if animal is in this position
-        if self.animal_grid[from_position[0], from_position[1]] == animal:
+        if self.animal_grid[int(from_position[0]), int(from_position[1])] == animal:
             # check if animal can move to the other position
             if self.add_animal(to_position, animal):
                 self.remove_animal(from_position)

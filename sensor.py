@@ -30,7 +30,7 @@ def find_middle(simulation, world, creature):
     return [int(x < x_middle), int(x > x_middle), int(y < y_middle), int(y > y_middle)]
 
 def four_random_values(simulation, world, creature):
-    return [np.random.random() * 1.0 for _ in range(4)]
+    return np.random.uniform(-1, 1, (4, 1))
 
 def random_0_or_1(simulation, world, creature):
     return [1] if random.random() < 0.5 else [0]
