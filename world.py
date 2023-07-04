@@ -1,5 +1,6 @@
 import pygame
 import random
+import numpy as np
 
 class World:
 
@@ -10,6 +11,7 @@ class World:
     ROCK = 4
     SEA = 5
     BREEDING = 6
+    RABBIT = 10
     # kadaver
     # luchtje
 
@@ -23,23 +25,31 @@ class World:
         self.max_temperature = config['world_parameters']['max_temperature']
         self.min_temperature = config['world_parameters']['min_temperature']
         self.delta_temperature = config['world_parameters']['delta_temperature']
+        self.grass_density = config['world_parameters']['grass_density']
+        self.rabbit_density = config['world_parameters']['rabbit_density']
+        self.size = size
 
-        self.size = config['world_parameters']['size']
-        self.grid = [[self.EMPTY for _ in range(size)] for _ in range(size)]
-        self.grass_length = [[0 for _ in range(size)] for _ in range(size)]
+        self.array_size = (self.size,self.size)
+        self.grid = np.zeros(self.array_size)
+        self.grass_length = np.zeros(self.array_size)
+        self.animal_grid = np.zeros(self.array_size)
 
         self.make_random_world()
 
     def make_random_world(self):
         for row in range(self.size):
             for col in range(self.size):
-                if col < self.size / 4:
+                if random.random() < self.grass_density:
                     tile_value = self.GRASS
                     self.grid[row][col] = tile_value
                     self.grass_length[row][col] = self.max_grass_length
-                if col > 3 * self.size / 4:
-                    tile_value = self.BREEDING
+                else:
+                    tile_value = self.EMPTY
                     self.grid[row][col] = tile_value
+                if random.random() < self.rabbit_density:
+                    tile_value = self.RABBIT
+                    self.animal_grid[row][col] = tile_value
+
 
 
     def eat_grass(self,row,col):
@@ -54,14 +64,19 @@ class World:
 
 
     def update(self):
-        self.min_temperature -= self.delta_temperature
-        self.max_temperature += self.delta_temperature
+        #self.min_temperature -= self.delta_temperature
+        #self.max_temperature += self.delta_temperature
 
         for row in range(self.size):
             for col in range(self.size):
                 tile_value = self.grid[row][col]
                 if tile_value == self.GRASS:
                     self.grass_length[row][col] = min(self.grass_length[row][col]+ self.grass_growing_speed, self.max_grass_length)
+                if tile_value == self.EMPTY:
+                    if random.random() < self.grass_density:
+                        tile_value = self.GRASS
+                        self.grid[row][col] = tile_value
+                        self.grass_length[row][col] = self.max_grass_length
 
 
 
@@ -70,26 +85,38 @@ class World:
         for row in range(self.size):
             for col in range(self.size):
                 tile_value = self.grid[row][col]
+                animal_value = self.animal_grid[row][col]
                 if tile_value == self.GRASS:
                     length = self.grass_length[row][col]
-                    color = (0,255,0)
+                    color = (100,255,100)
                     screen.set_at((row,col), color)
-                if tile_value == self.BREEDING:
-                    length = self.grass_length[row][col]
-                    color = (255, 255, 0)
+                if animal_value == self.RABBIT:
+                    color = (255,0,0)
                     screen.set_at((row, col), color)
 
 
 
 
     def give_information_about_location(self, row, col):
-        if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
-            return self.EMPTY
+        # TODO: improve sides
+        if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
+            return np.zeros(9)
 
-        tile_value = self.grid[row][col]
-        return tile_value
+        info = self.grid[row-1:row+2,col-1:col+2].reshape(9)
+
+        return info
+
+    def give_information_about_animals(self, row, col):
+        # TODO: improve sides
+        if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
+            return np.zeros(9)
+
+        info = self.animal_grid[row - 1:row + 2, col - 1:col + 2].reshape(9)
+
+        return info
 
     def give_information_about_temperature(self, row, col,time):
+        # not used
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
             return -1
 
