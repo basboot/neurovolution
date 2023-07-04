@@ -41,6 +41,10 @@ def always_on(simulation, world, creature):
 def internal_clock(simulation, world, creature):
     return simulation.season_clock
 
+def get_position(simulation, world, creature):
+    # return  normalized position
+    return creature.state['position'] / creature.config['world_parameters']['size']
+
 
 def use_sensor(name, n_values, active, simulation, world, creature):
     if active:
