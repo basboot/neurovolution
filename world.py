@@ -51,6 +51,27 @@ class World:
                     self.animal_grid[row][col] = tile_value
 
 
+    def add_rabbit(self, position):
+        if self.animal_grid[position[0]][position[1]] > 0:
+            return False
+        else:
+            self.animal_grid[position[0]][position[1]] = self.RABBIT
+            return True
+
+    def remove_rabbit(self, position):
+        if self.animal_grid[position[0]][position[1]] > 0:
+            self.animal_grid[position[0]][position[1]] = 0
+            return True
+        else:
+            return False
+
+    def move_rabbit(self, from_position, to_position):
+        if self.add_rabbit(to_position):
+            self.remove_rabbit(from_position)
+            return True
+        else:
+            return False
+
 
     def eat_grass(self,row,col):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
