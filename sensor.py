@@ -8,10 +8,16 @@ from world import World
 def heartbeat(simulation, world, creature):
     return [0] if simulation.simulation_step % creature.state['properties']['heartbeat'] > 0 else [1]
 
-def is_standing_on_grass(simulation, world, creature):
+def look(simulation, world, creature):
     information = world.give_information_about_location(int(creature.state['position'][0]),
                                                         int(creature.state['position'][1]))
-    return [1] if information == World.GRASS else [0]
+
+    # filter grass only (for now)
+    information = np.equal(information, world.GRASS).astype(int)
+
+    print(information)
+
+    return information
 
 def is_not_standing_on_grass(simulation, world, creature):
     information = world.give_information_about_location(int(creature.state['position'][0]),

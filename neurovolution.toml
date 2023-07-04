@@ -20,11 +20,11 @@ weighted_selection = true # false = only creatures that meet the criterium survi
 
 
 [creature]
-initial_energy = 100
+initial_energy = 10
 max_energy = 1000
-energy_per_timestep = 0.11
-energy_from_grass = 1.5
-energy_from_dirt = -1500
+energy_per_timestep = 0.5
+energy_from_grass = 2
+energy_from_dirt = 0
 min_energy_for_reproduction = 1
 
 [visualisation]
@@ -50,8 +50,6 @@ grass_density = 0.01
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
 #    ['heartbeat', 1, 'None'],
-#    ['is_standing_on_grass', 1, 'None', false],
-#    ['is_not_standing_on_grass', 1, 'None', false],
     ['four_random_values', 4, 'None', false],
 #    ['random_0_or_1', 1, 'None', false],
 #    ['find_middle', 4, 'None, false]
@@ -59,6 +57,7 @@ functions = [
 #    ['internal_clock', 1, 'None', false],
 
 #    ['energy_level', 1, 'None', false]
+    ['look', 9, 'None', false],
 ]
 
 [actuators]
@@ -69,7 +68,7 @@ functions = [
 #  this.
 functions = [
 #    ['reproduce', 1, 'sigmoid', false],
-#    ['eat_grass', 1, 'sigmoid', false],
+    ['eat_grass', 1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
      ['move', 4, 'sigmoid', false],
 ]
@@ -111,7 +110,6 @@ connections = [
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
-#    ['is_standing_on_grass', 'eat_grass']
 ]
 
 
