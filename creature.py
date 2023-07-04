@@ -11,11 +11,24 @@ from sensor import use_sensor
 
 
 class Creature:
-    def __init__(self, config, dna=None):
+    def __init__(self, config, world, dna=None, position=None):
         self.config = config
+
+        if position is None:
+            # find position in the world for this creature
+            while True:
+                position = np.random.random_integers(0, config['world_parameters']['size'] - 1, (2, 1))
+                animal_added = world.add_animal(position, world.RABBIT)
+
+                # break if an empty spot has been found
+                if animal_added:
+                    break
+        else:
+            assert world.add_animal(position, world.RABBIT), "New creature position not empty"
+
         self.state = {
             # TODO: move position select to simulation
-            'position': (np.random.uniform(0, config['world_parameters']['size'], (2, 1))),
+            'position': position,
             'dna': DNA(config) if dna is None else dna,
             'energy': config['creature']['initial_energy'],
         }
