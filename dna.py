@@ -81,6 +81,16 @@ class DNA:
         if np.random.random() < self.config['body']['mutation']['p']:
             body = np.random.normal(body, self.config['body']['mutation']['sd'])
 
+        # clamp values between min and max after possible mutation
+        for i in range(len(self.config['body']['properties'])):
+            property = self.config['body']['properties'][i]
+            min_value = property[1]
+            max_value = property[2]
+
+            value = self.body[i + len(self.config['sensors']['functions']) + len(self.config['actuators']['functions'])]
+            value = max(min(value, max_value), min_value)
+            self.body[i + len(self.config['sensors']['functions']) + len(self.config['actuators']['functions'])] = value
+
         return DNA(self.config, brain, body)
 
 
