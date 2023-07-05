@@ -26,18 +26,20 @@ def relu(Z):
 
 
 class Brain:
-    def __init__(self, config, brain):
+    def __init__(self, config, brain, species):
+        self.species = species
         self.config = config
         self.nn_layers, self.nn_connections, self.params_values = self.init_brain(brain)
 
     def init_brain(self, brain):
-        layers = self.config['sensors']['functions'] + self.config['brain']['hidden_layers'] + self.config['actuators'][
-            'functions']
+        layers = self.config['sensors'][self.species]['functions'] \
+                 + self.config['brain'][self.species]['hidden_layers'] \
+                 + self.config['actuators'][self.species]['functions']
         nn_layers = {}
         for layer in layers:
             nn_layers[layer[0]] = layer[1:]
 
-        nn_connections = self.config['brain']['connections']
+        nn_connections = self.config['brain'][self.species]['connections']
 
         params_values = []
 
@@ -89,7 +91,7 @@ class Brain:
 
         # apply activation to all actuators and return values
         outputs = {}
-        for actuator_name, _, actuator_activation, _ in self.config['actuators']['functions']:
+        for actuator_name, _, actuator_activation, _ in self.config['actuators'][self.species]['functions']:
             if actuator_activation == "relu":
                 outputs[actuator_name] = relu(memory[actuator_name])
             elif actuator_activation == "sigmoid":
@@ -98,7 +100,7 @@ class Brain:
                 outputs[actuator_name] = memory[actuator_name]
 
         # apply hardwired connections
-        for direct_connection in self.config['brain']['direct_connections']:
+        for direct_connection in self.config['brain'][self.species]['direct_connections']:
             outputs[direct_connection[1]] = memory[direct_connection[0]]
 
         return outputs

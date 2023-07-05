@@ -15,6 +15,8 @@ class Creature:
         self.config = config
         self.world = world
 
+        self.species = "rabbit" # TODO: remove rabbit
+
         if position is None:
             # find position in the world for this creature
             while True:
@@ -30,8 +32,8 @@ class Creature:
         self.state = {
             # TODO: move position select to simulation
             'position': position,
-            'dna': DNA(config) if dna is None else dna,
-            'energy': config['creature']['initial_energy'],
+            'dna': DNA(config, species=self.species) if dna is None else dna,
+            'energy': config['creature'][self.species]['initial_energy'],
         }
 
         # add sensors from DNA
@@ -43,7 +45,7 @@ class Creature:
         if 'ploidy' not in self.state['properties']:
             self.state['properties']['ploidy'] = 1
 
-        self.state['brain'] = Brain(config, self.state['dna'].brain)
+        self.state['brain'] = Brain(config, self.state['dna'].brain, self.species)
 
 
 
@@ -71,9 +73,9 @@ class Creature:
 
         temp = world.give_information_about_temperature(self.state['position'][0],self.state['position'][1],0)
         factor = 1 if 5 < temp < 25 else 100
-        self.state['energy'] -= self.config['creature']['energy_per_timestep']*factor
+        self.state['energy'] -= self.config['creature'][self.species]['energy_per_timestep']*factor
 
-        self.state['energy'] = min(self.state['energy'], self.config['creature']['max_energy'])
+        self.state['energy'] = min(self.state['energy'], self.config['creature'][self.species]['max_energy'])
 
     def use_brain(self, inputs):
         # TODO: implement brain
