@@ -17,6 +17,19 @@ def look(simulation, world, creature):
 
     return information
 
+def has_no_neighbours(simulation, world, creature):
+    information = world.give_information_about_animals(int(creature.state['position'][0]),
+                                                        int(creature.state['position'][1]))
+
+    # remove self from information
+    information[4] = 0
+    # filter grass only (for now)
+    neighbours = np.sum(information)
+
+    has_no_neighbours = np.equal(neighbours, 0).astype(int)
+
+    return has_no_neighbours
+
 def is_not_standing_on_grass(simulation, world, creature):
     information = world.give_information_about_location(int(creature.state['position'][0]),
                                                         int(creature.state['position'][1]))
