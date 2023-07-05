@@ -160,7 +160,9 @@ class Simulation:
         return np.clip(position, 0, self.config['world_parameters']['size'] - 1)
 
     def draw_simulation(self, screen):
+        font = pygame.font.SysFont('arial', int(self.config['visualisation']['size'][0] * 0.0625))
         if self.config['simulation']['force_new_generation']:
-            font = pygame.font.SysFont('arial', 32)
             text_surface = font.render(f"generation {self.generation}", False, (0, 0, 0))
-            screen.blit(text_surface, (10, 10))
+        else:
+            text_surface = font.render(f"t = {self.simulation_step}", False, (0, 0, 0))
+        screen.blit(text_surface, (10, 10))
