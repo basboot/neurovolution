@@ -6,6 +6,7 @@ import pygame
 
 import stopwatch
 from creature import Creature
+from graph import Graph
 from selection import is_selected, get_selection_weight
 from visualisation import Visualisation
 from world import World
@@ -26,6 +27,9 @@ class Simulation:
                                   framerate=config['visualisation']['framerate'],
                                   interval=config['visualisation']['interval']) \
         if config['visualisation']['on'] else None
+
+        self.graph = Graph() \
+            if config['graph']['on'] else None
 
         self.creatures = [Creature(config, self.world) for _ in range(config['simulation']['n_creatures'])]
         self.born_creatures = []
@@ -149,6 +153,8 @@ class Simulation:
             # show
             if self.visualisation is not None:
                 self.visualisation.update(self.world, self.creatures, self)
+            if self.graph is not None:
+                self.graph.update(self.world, self.creatures, self)
 
             print(f"{len(self.creatures)} creatures")
             stopwatch.stop("visualisation")
