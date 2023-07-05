@@ -11,11 +11,15 @@ from sensor import use_sensor
 
 
 class Creature:
-    def __init__(self, config, world, dna=None, position=None):
+    def __init__(self, config, world, creature_config, dna=None, position=None):
+        self.name = creature_config[0]
+        self.id = creature_config[1]
+        self.color = creature_config[2]
+
         self.config = config
         self.world = world
 
-        self.species = "rabbit" # TODO: remove rabbit
+        self.species = self.name
 
         if position is None:
             # find position in the world for this creature
@@ -50,7 +54,7 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), (255, 0, 0))
+        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), self.color)
         # creature_color = (0, 0, 0)
         # if self.state['properties']['ploidy'] == 1:
         #     creature_color = (255, 0, 0)
@@ -114,7 +118,7 @@ class Creature:
             # remove test animal
             self.world.remove_animal(new_position)
             # create real animal
-            new_creature = Creature(self.config, self.world, dna=new_dna, position=new_position)
+            new_creature = Creature(self.config, self.world, [self.name, self.id, self.color], dna=new_dna, position=new_position)
             return new_creature
         else:
             # position not empty, reproduction fails

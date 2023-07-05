@@ -37,8 +37,10 @@ delta_temperature = 0.001
 grass_density = 0.01
 
 [creatures]
-# name, id
-species = ["rabbit", 10]
+# name, id, color
+species = [
+    ["rabbit", 10, [255, 0, 0]]
+]
 
 [creature.rabbit]
 initial_energy = 10
