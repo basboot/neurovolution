@@ -58,6 +58,7 @@ functions = [
 
 #    ['energy_level', 1, 'None', false]
     ['look', 9, 'None', false],
+    ['has_no_neighbours', 1, 'None', true]
 ]
 
 [actuators]
@@ -67,7 +68,7 @@ functions = [
 #  mights lead to problems. They are actuated in order of the array however, so shifting them might prevent
 #  this.
 functions = [
-#    ['reproduce', 1, 'sigmoid', false],
+    ['reproduce', 1, 'sigmoid', false],
     ['eat_grass', 1, 'sigmoid', false],
 #    ['die', 1, 'None', true]
      ['move', 4, 'sigmoid', false],
@@ -110,6 +111,7 @@ connections = [
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
+    ['has_no_neighbours', 'reproduce']
 ]
 
 

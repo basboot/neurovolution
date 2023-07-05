@@ -13,6 +13,7 @@ from sensor import use_sensor
 class Creature:
     def __init__(self, config, world, dna=None, position=None):
         self.config = config
+        self.world = world
 
         if position is None:
             # find position in the world for this creature
@@ -100,14 +101,19 @@ class Creature:
         for actuator in self.state['actuators']:
             use_actuator(actuator[0], actuator[2], outputs[actuator[0]], simulation, world, self)
 
-    def reproduce(self, other=None, same_location=True, share_energy=True):
+    def reproduce(self, other=None, share_energy=True):
         new_dna = self.state['dna'].reproduce(other)
-        new_creature = Creature(self.config, new_dna)
 
-        if same_location:
-            new_creature.state['position'] = self.state['position']
+        # choose position
+        new_position = self.state['position'] + np.random.randint(-1, 2, (2, 1))
 
-        if share_energy:
-            new_creature.state['energy'] = self.state['energy'] = self.state['energy'] / 2
-
-        return new_creature
+        # to see if the position is empty, we just try to put a test animal in the world
+        if self.world.add_animal(new_position, self.world.RABBIT):
+            # remove test animal
+            self.world.remove_animal(new_position)
+            # create real animal
+            new_creature = Creature(self.config, self.world, dna=new_dna, position=new_position)
+            return new_creature
+        else:
+            # position not empty, reproduction fails
+            return None

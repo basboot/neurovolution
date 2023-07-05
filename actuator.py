@@ -20,9 +20,12 @@ def move(simulation, world, creature, signals):
         creature.state['position'] = desired_position
 
 def reproduce(simulation, world, creature, signals):
-    if signals[0] > 0.99 and creature.state['energy'] > creature.config['creature']['min_energy_for_reproduction']:
+    if signals[0] > 0.5 and creature.state['energy'] > creature.config['creature']['min_energy_for_reproduction']:
         new_creature = creature.reproduce()
-        simulation.add_creature(new_creature)
+
+        # creating a creature can fail, so check this
+        if new_creature is not None:
+            simulation.add_creature(new_creature)
 
 def eat_grass(simulation, world, creature, signals):
     if signals[0] > 0.5:
