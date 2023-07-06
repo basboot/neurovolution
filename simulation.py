@@ -31,7 +31,7 @@ class Simulation:
         self.graph = Graph() \
             if config['graph']['on'] else None
 
-        self.creatures = [Creature(config, self.world) for _ in range(config['simulation']['n_creatures'])]
+        self.creatures = [Creature(config, self.world, config['creatures']['species'][0]) for _ in range(config['simulation']['n_creatures'])]
         self.born_creatures = []
         self.dead_creatures = []
         self.simulation_step = 0

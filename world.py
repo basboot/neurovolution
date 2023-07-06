@@ -11,7 +11,7 @@ class World:
     ROCK = 4
     SEA = 5
     BREEDING = 6
-    RABBIT = 10
+    RABBIT = 10 # must be the same id as used in config!
     # kadaver
     # luchtje
 
