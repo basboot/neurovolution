@@ -103,6 +103,8 @@ class World:
                         self.grid[row][col] = tile_value
                         self.grass_length[row][col] = self.max_grass_length
 
+        print("Grass lenght:", np.sum(self.grass_length))
+
 
 
 
@@ -113,7 +115,7 @@ class World:
                 animal_value = self.animal_grid[row][col]
                 if tile_value == self.GRASS:
                     length = self.grass_length[row][col]
-                    color = (100,255,100)
+                    color = (200,255,200)
                     screen.set_at((row,col), color)
 
 
