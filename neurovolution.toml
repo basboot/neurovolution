@@ -6,7 +6,7 @@ debug = true
 [simulation]
 max_iterations = 100000
 n_creatures = 250 # initial number of creatures
-max_creatures = 1000
+max_creatures = 10000
 min_creatures = 10
 # if value > -1 this value will be used to seed the random generators
 seed = -1
@@ -34,7 +34,7 @@ max_terrain_height = 3000
 max_temperature = 20
 min_temperature = 10
 delta_temperature = 0.001
-grass_density = 0.001
+grass_density = 0.0001
 
 [creatures]
 # name, id, color
