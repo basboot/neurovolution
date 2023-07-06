@@ -95,7 +95,7 @@ class DNA:
             value = self.body[i + len(self.config['sensors'][self.species]['functions']) + \
                               len(self.config['actuators'][self.species]['functions'])]
             value = max(min(value, max_value), min_value)
-            self.body[i + len(self.config['sensors'][self.species]['functions']) + \
+            body[i + len(self.config['sensors'][self.species]['functions']) + \
                       len(self.config['actuators'][self.species]['functions'])] = value
 
         return DNA(self.config, self.species, brain, body)
