@@ -83,7 +83,7 @@ class Simulation:
             print("No creatures met the selection criterium, restart sim")
             self.creatures = []
             for _ in range(self.config['simulation']['generation_size']):
-                self.creatures.append(Creature(self.config, self.world))
+                self.creatures.append(Creature(self.config, self.world, self.config['creatures']['species'][0]))
         else:
             for _ in range(self.config['simulation']['generation_size']):
                 survivor = random.choice(survivors)
@@ -142,7 +142,7 @@ class Simulation:
 
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
-                self.creatures.append(Creature(self.config, self.world))
+                self.creatures.append(Creature(self.config, self.world, self.config['creatures']['species'][0]))
             stopwatch.stop("creatures_population_changes")
 
             stopwatch.start("visualisation")
