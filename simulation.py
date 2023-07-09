@@ -121,8 +121,13 @@ class Simulation:
             stopwatch.start("creatures_update")
             for creature in self.creatures:
                 creature.update(self, self.world)
+                # creatures die when they have no energy
                 if creature.state['energy'] < 0:
                     self.dead_creatures.append(creature)
+                # creatures die when they are too old
+                if creature.state['age'] > creature.config['creature'][creature.species]['max_age']:
+                    self.dead_creatures.append(creature)
+
             stopwatch.stop("creatures_update")
 
             stopwatch.start("creatures_population_changes")

@@ -44,6 +44,7 @@ species = [
 [creature.rabbit]
 initial_energy = 10
 max_energy = 1000
+max_age = 10
 energy_per_timestep = 0.5
 energy_from_grass = 2
 energy_from_dirt = 0
