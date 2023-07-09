@@ -26,7 +26,12 @@ class Simulation:
                                   interval=config['visualisation']['interval']) \
         if config['visualisation']['on'] else None
 
-        self.creatures = [Creature(config, self.world, config['creatures']['species'][0]) for _ in range(config['simulation']['n_creatures'])]
+        self.creatures = []
+
+        for species in config['creatures']['species']:
+            for _ in range(config['creature'][species[0]]['n_creatures']):
+                self.creatures.append(Creature(config, self.world, species))
+
         self.born_creatures = []
         self.dead_creatures = []
         self.simulation_step = 0
