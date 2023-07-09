@@ -21,6 +21,8 @@ class Creature:
 
         self.species = self.name
 
+        self.age = 0
+
         if position is None:
             # find position in the world for this creature
             while True:
@@ -64,6 +66,8 @@ class Creature:
         #                    (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
 
     def update(self, simulation, world):
+        self.age += 1
+
         stopwatch.start("sensors")
         inputs = self.get_sensors(simulation, world)
         stopwatch.stop("sensors")
