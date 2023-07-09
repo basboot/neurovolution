@@ -21,8 +21,6 @@ class Creature:
 
         self.species = self.name
 
-        self.age = 0
-
         if position is None:
             # find position in the world for this creature
             while True:
@@ -40,6 +38,7 @@ class Creature:
             'position': position,
             'dna': DNA(config, species=self.species) if dna is None else dna,
             'energy': config['creature'][self.species]['initial_energy'],
+            'age': 0
         }
 
         # add sensors from DNA
@@ -66,7 +65,7 @@ class Creature:
         #                    (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
 
     def update(self, simulation, world):
-        self.age += 1
+        self.state['age'] += 1
 
         stopwatch.start("sensors")
         inputs = self.get_sensors(simulation, world)
