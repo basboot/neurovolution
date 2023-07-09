@@ -85,11 +85,15 @@ class Simulation:
 
             # cleanup if there are more creatures than allowed
             if len(self.creatures) > self.config['simulation']['max_creatures']:
-                self.creatures = self.creatures[0:self.config['simulation']['max_creatures']]
+                first_creature = len(self.creatures) - self.config['simulation']['max_creatures'] // 2
+                self.creatures = self.creatures[0 + first_creature:self.config['simulation']['max_creatures'] + first_creature]
 
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
-                self.creatures.append(Creature(self.config, self.world, self.config['creatures']['species'][0]))
+                # select random species
+                species = self.config['creatures']['species']
+                selected_species =  random.choice(species)
+                self.creatures.append(Creature(self.config, self.world, selected_species))
             stopwatch.stop("creatures_population_changes")
 
             stopwatch.start("visualisation")

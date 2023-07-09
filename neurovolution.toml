@@ -32,7 +32,7 @@ grass_density = 0.0001
 [creatures]
 # name, id, color
 species = [
-    ["rabbit", 10, [255, 0, 0]]
+    ["rabbit", 10, [255, 0, 0]],
 ]
 
 [creature.rabbit]
