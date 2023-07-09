@@ -6,7 +6,6 @@ import pygame
 
 import stopwatch
 from creature import Creature
-from selection import is_selected, get_selection_weight
 from visualisation import Visualisation
 from world import World
 
@@ -39,57 +38,6 @@ class Simulation:
     def left_upper_corner(self):
         print('left_upper_corner')
 
-    def repopulate(self, selection_function):
-        self.generation += 1
-        print(f"START GENERATION {self.generation}")
-        if not self.config['simulation']['weighted_selection']:
-            self.repopulate_no_weights(selection_function)
-
-        else:
-            weights = []
-            for creature in self.creatures:
-                weights.append(get_selection_weight(selection_function, creature))
-
-            survivors = self.creatures
-
-
-            self.creatures = []
-            while len(self.creatures) < self.config['simulation']['generation_size']:
-                # use k = 1, so it is easier to mix strategies
-                survivor = random.choices(survivors, weights=weights, k=1)[0]
-
-                if survivor.state['properties']['ploidy'] == 1:
-                    self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
-                else:
-                    if survivor.state['properties']['ploidy'] == 2:
-                        # this must be optimized
-                        # find mate
-                        mate = None
-                        while mate is None or mate.state['properties']['ploidy'] != 2:
-                            mate = random.choices(survivors, weights=weights, k=1)[0]
-                            self.creatures.append(survivor.reproduce(other=mate.state['dna'], same_location=True, share_energy=False))
-
-
-    def repopulate_no_weights(self, selection_function):
-        survivors = []
-        for creature in self.creatures:
-            if is_selected(selection_function, creature):
-                survivors.append(creature)
-
-        print(f"{len(survivors) / self.config['simulation']['generation_size'] * 100}% survivors")
-        self.creatures = []
-
-        if len(survivors) == 0:
-            print("No creatures met the selection criterium, restart sim")
-            self.creatures = []
-            for _ in range(self.config['simulation']['generation_size']):
-                self.creatures.append(Creature(self.config, self.world, self.config['creatures']['species'][0]))
-        else:
-            for _ in range(self.config['simulation']['generation_size']):
-                survivor = random.choice(survivors)
-                self.creatures.append(survivor.reproduce(other=None, same_location=True, share_energy=False))
-
-
     def run(self, max_iterations):
         # simulation loop
 
@@ -99,20 +47,14 @@ class Simulation:
             self.simulation_step += 1
 
             # update clock
-            t = (self.simulation_step % self.config['simulation']['generation_lifespan']) \
-                / self.config['simulation']['generation_lifespan'] * math.pi * 2
+            t = (self.simulation_step % self.config['simulation']['season_iterations']) \
+                / self.config['simulation']['season_iterations'] * math.pi * 2
 
             self.season_clock = math.sin(t)
 
 
             if self.debug:
                 print(f"Simulation step: {self.simulation_step}")
-
-
-            # force new generation
-            if self.config['simulation']['force_new_generation'] \
-                    and self.simulation_step % self.config['simulation']['generation_lifespan'] == 0:
-                self.repopulate(self.config['simulation']['generation_selection'])
 
             stopwatch.start("world_update")
             self.world.update()
@@ -166,8 +108,5 @@ class Simulation:
 
     def draw_simulation(self, screen):
         font = pygame.font.SysFont('arial', int(self.config['visualisation']['size'][0] * 0.0625))
-        if self.config['simulation']['force_new_generation']:
-            text_surface = font.render(f"generation {self.generation}", False, (0, 0, 0))
-        else:
-            text_surface = font.render(f"t = {self.simulation_step}", False, (0, 0, 0))
+        text_surface = font.render(f"t = {self.simulation_step}", False, (0, 0, 0))
         screen.blit(text_surface, (10, 10))

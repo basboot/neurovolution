@@ -110,7 +110,7 @@ class Creature:
         for actuator in self.state['actuators']:
             use_actuator(actuator[0], actuator[2], outputs[actuator[0]], simulation, world, self)
 
-    def reproduce(self, other=None, share_energy=True):
+    def reproduce(self, other=None):
         new_dna = self.state['dna'].reproduce(other)
 
         # choose position
