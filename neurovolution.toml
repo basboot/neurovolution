@@ -32,7 +32,10 @@ grass_density = 0.0001
 # name, id, color
 species = [
     ["rabbit", 10, [255, 0, 0]],
+    ["wolve", 11, [0, 0, 255]]
 ]
+
+# RABBIT
 
 [creature.rabbit]
 n_creatures = 250 # initial number of creatures
@@ -50,15 +53,8 @@ grass_eat_speed = 1
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
-#    ['heartbeat', 1, 'None'],
     ['four_random_values', 4, 'None', false],
-#    ['random_0_or_1', 1, 'None', false],
-#    ['find_middle', 4, 'None, false]
-#    ['always_on', 1, 'None', true]
-#    ['internal_clock', 1, 'None', false],
-
-#    ['energy_level', 1, 'None', false]
-    ['look', 9, 'None', false],
+    ['look_for_grass', 9, 'None', false],
     ['has_no_neighbours', 1, 'None', true]
 ]
 
@@ -71,41 +67,26 @@ functions = [
 functions = [
     ['reproduce', 1, 'sigmoid', false],
     ['eat_grass', 1, 'sigmoid', false],
-#    ['die', 1, 'None', true]
-     ['move', 4, 'sigmoid', false],
+    ['move', 4, 'sigmoid', false],
 ]
 
 [body.rabbit]
 # 'name', min, max, rounded
-properties = [
-#    ['heartbeat', 1, 10, true],
-#    ['ploidy', 1, 2, true]
-]
+properties = []
 mutation = {p = 0.8, sd = 0.25}
 
 [brain.rabbit]
 mutation = {p = 0.8, sd = 0.25}
 # only hidden layers have to be specified, first and last layer are determined by sensors and actuators
 # number of neurons, activation
-hidden_layers = [
-#    ['layer_1', 5, 'relu']
-]
+hidden_layers = []
 
 # define connections: [sensor, hidden_layer], [hidden_layer, actuator] or [sensor, actuator]
 # every connection will get its own outxin parameters
 # note: the order they are defined is the order in which they will be calculated
 connections = [
-#    ['is_standing_on_grass', 'layer_1'],
     ['four_random_values', 'move'],
-#    ['random_0_or_1', 'layer_1'],
-#    ['layer_1', 'small_move'],
-#    ['layer_1', 'reproduce'],
-#    ['layer_1', 'eat_grass'],
-#    ['is_not_standing_on_grass', 'small_move']
-#    ['internal_clock', 'move'],
-#    ['is_standing_on_grass', 'layer_1'],
-#    ['layer_1', 'move'],
-    ['look', 'eat_grass']
+    ['look_for_grass', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
@@ -115,4 +96,64 @@ direct_connections = [
     ['has_no_neighbours', 'reproduce']
 ]
 
+# WOLVE
+
+[creature.wolve]
+n_creatures = 250 # initial number of creatures
+initial_energy = 10
+max_energy = 1000
+max_age = 10
+energy_per_timestep = 0.5
+energy_from_grass = 2
+energy_from_dirt = 0
+min_energy_for_reproduction = 1
+min_age_for_reproduction = 5
+grass_eat_speed = 1
+
+[sensors.wolve]
+# all sensor functions must be defined in sensor.py
+# configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
+functions = [
+    ['four_random_values', 4, 'None', false],
+    ['look_for_grass', 9, 'None', false],
+    ['has_no_neighbours', 1, 'None', true]
+]
+
+[actuators.wolve]
+# all actuator functions must be defined in actuator.py
+# configformat: 'functionname', number of input signals, activation function, true=always on|false=evolution
+# Note: actuators will be actuated, after all sensors have been read. Id actuators alter the world/state this
+#  mights lead to problems. They are actuated in order of the array however, so shifting them might prevent
+#  this.
+functions = [
+    ['reproduce', 1, 'sigmoid', false],
+    ['eat_grass', 1, 'sigmoid', false],
+    ['move', 4, 'sigmoid', false],
+]
+
+[body.wolve]
+# 'name', min, max, rounded
+properties = []
+mutation = {p = 0.8, sd = 0.25}
+
+[brain.wolve]
+mutation = {p = 0.8, sd = 0.25}
+# only hidden layers have to be specified, first and last layer are determined by sensors and actuators
+# number of neurons, activation
+hidden_layers = []
+
+# define connections: [sensor, hidden_layer], [hidden_layer, actuator] or [sensor, actuator]
+# every connection will get its own outxin parameters
+# note: the order they are defined is the order in which they will be calculated
+connections = [
+    ['four_random_values', 'move'],
+    ['look_for_grass', 'eat_grass']
+]
+
+# define connections that bypass the brain: [sensor, actuator]
+# there will be no weight, bias or activation out == in, so dimensions must match!
+# note: sensors/actuators will still respect if they are active in the dna
+direct_connections = [
+    ['has_no_neighbours', 'reproduce']
+]
 

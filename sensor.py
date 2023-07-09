@@ -8,12 +8,21 @@ from world import World
 def heartbeat(simulation, world, creature):
     return [0] if simulation.simulation_step % creature.state['properties']['heartbeat'] > 0 else [1]
 
-def look(simulation, world, creature):
+def look_for_grass(simulation, world, creature):
     information = world.give_information_about_location(int(creature.state['position'][0]),
                                                         int(creature.state['position'][1]))
 
     # filter grass only (for now)
     information = np.equal(information, world.GRASS).astype(int)
+
+    return information
+
+def look_for_rabbit(simulation, world, creature):
+    information = world.give_information_about_location(int(creature.state['position'][0]),
+                                                        int(creature.state['position'][1]))
+
+    # filter grass only (for now)
+    information = np.equal(information, world.RABBIT).astype(int)
 
     return information
 
