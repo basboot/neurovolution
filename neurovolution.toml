@@ -28,7 +28,6 @@ interval = 1
 size = 256
 grass_growing_speed = 0.01
 max_grass_length = 1
-grass_eat_speed = 1
 max_water_depth = 1000
 max_terrain_height = 3000
 max_temperature = 20
@@ -49,6 +48,7 @@ energy_per_timestep = 0.5
 energy_from_grass = 2
 energy_from_dirt = 0
 min_energy_for_reproduction = 1
+grass_eat_speed = 1
 
 [sensors.rabbit]
 # all sensor functions must be defined in sensor.py

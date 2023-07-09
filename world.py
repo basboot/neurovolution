@@ -19,7 +19,6 @@ class World:
 
         self.max_water_depth = config['world_parameters']['max_water_depth']
         self.grass_growing_speed = config['world_parameters']['grass_growing_speed']
-        self.grass_eat_speed = config['world_parameters']['grass_eat_speed']
         self.max_grass_length = config['world_parameters']['max_grass_length']
         self.max_terrain_height = config['world_parameters']['max_terrain_height']
         self.max_temperature = config['world_parameters']['max_temperature']
@@ -72,14 +71,14 @@ class World:
             else:
                 return False
 
-    def eat_grass(self,row,col):
+    def eat_grass(self, row, col, grass_eat_speed):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
             return False
 
         if self.grass_length[row][col] == 0:
             return False
 
-        self.grass_length[row][col] -= self.grass_eat_speed
+        self.grass_length[row][col] -= grass_eat_speed
         if self.grass_length[row][col] <= 0:
             self.grid[row][col] = self.EMPTY
 
