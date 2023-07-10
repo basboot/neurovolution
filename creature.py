@@ -122,6 +122,9 @@ class Creature:
             self.world.remove_animal(new_position)
             # create real animal
             new_creature = Creature(self.config, self.world, [self.name, self, self.color], dna=new_dna, position=new_position)
+
+            #self.state['energy'] = new_creature.state['energy'] = self.state['energy'] // 2
+
             return new_creature
         else:
             # position not empty, reproduction fails

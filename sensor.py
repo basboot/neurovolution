@@ -16,17 +16,22 @@ def look_for_grass(simulation, world, creature):
 
     return information
 
-def look_for_rabbit(simulation, world, creature):
-    information = world.give_information_about_location(creature.state['position'][0, 0], creature.state['position'][1, 0])
+def look_for_other_animal(simulation, world, creature):
+    information = world.give_information_about_animals(creature.state['position'][0, 0], creature.state['position'][1, 0])
 
-    # filter grass only (for now)
-    information = np.equal(information, world.RABBIT).astype(int)
+    # None/Object => False/True => 0/1
+    information = np.array(information, dtype='bool').astype(int)
+
+    # filter self
+    information[4] = 0
+
 
     return information
 
 def has_no_neighbours(simulation, world, creature):
     information = world.give_information_about_animals(creature.state['position'][0, 0], creature.state['position'][1, 0])
 
+    information = np.array(information, dtype='bool').astype(int)
     # remove self from information
     information[4] = 0
     # filter grass only (for now)

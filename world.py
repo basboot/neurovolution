@@ -2,6 +2,9 @@ import pygame
 import random
 import numpy as np
 
+import creature
+
+
 class World:
 
     EMPTY = 0
@@ -47,6 +50,7 @@ class World:
 
 
     def add_animal(self, position, animal):
+        assert (type(animal) is creature.Creature), "no Creature send do grid"
         # space is occupied, so cannot add animal
         if self.animal_grid[position[0, 0], position[1, 0]] is not None:
             return False
@@ -62,7 +66,9 @@ class World:
             return False
 
     def move_animal(self, from_position, to_position, animal):
+
         # check if animal is in this position
+        assert (type(animal) is creature.Creature), "no Creature send do grid"
         if self.animal_grid[from_position[0, 0], from_position[1, 0]] == animal:
             # check if animal can move to the other position
             if self.add_animal(to_position, animal):
@@ -132,10 +138,9 @@ class World:
     def give_information_about_animals(self, row, col):
         # TODO: improve sides
         if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
-            return np.zeros(9)
+            return np.empty(9, dtype=object)
 
-        # None/Object => False/True => 0/1
-        info = np.array(self.animal_grid[row - 1:row + 2, col - 1:col + 2], dtype='bool').reshape(9).astype(int)
+        info = self.animal_grid[row - 1:row + 2, col - 1:col + 2].reshape(9)
 
         return info
 

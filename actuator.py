@@ -38,6 +38,20 @@ def eat_grass(simulation, world, creature, signals):
             # eat dirt
             creature.state['energy'] += creature.config['creature'][creature.species]['energy_from_dirt']
 
+def eat_animal(simulation, world, creature, signals):
+    information = world.give_information_about_animals(creature.state['position'][0, 0], creature.state['position'][1, 0])
+
+    for i in range(9):
+        # try to eat
+        if signals[i] > 0.5:
+            # rabbit at location?
+            if information[i] is not None and information[i].id == world.RABBIT:
+                creature.state['energy'] += creature.config['creature'][creature.species]['energy_from_rabbit']
+                # kill rabbit
+                information[i].state['energy'] = 0
+            else:
+                pass
+
 def die(simulation, world, creature, signals):
     if signals[0] > 0.5:
         creature.state['energy'] = 0

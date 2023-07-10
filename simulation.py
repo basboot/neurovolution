@@ -33,7 +33,7 @@ class Simulation:
                 self.creatures.append(Creature(config, self.world, species))
 
         self.born_creatures = []
-        self.dead_creatures = []
+        self.dead_creatures = set() # use set to prevent double removals
         self.simulation_step = 0
 
         self.season_clock = 0
@@ -70,10 +70,10 @@ class Simulation:
                 creature.update(self, self.world)
                 # creatures die when they have no energy
                 if creature.state['energy'] < 0:
-                    self.dead_creatures.append(creature)
+                    self.dead_creatures.add(creature)
                 # creatures die when they are too old
                 if creature.state['age'] > creature.config['creature'][creature.species]['max_age']:
-                    self.dead_creatures.append(creature)
+                    self.dead_creatures.add(creature)
 
             stopwatch.stop("creatures_update")
 
@@ -89,7 +89,7 @@ class Simulation:
                 self.world.remove_animal(creature.state['position'])
                 # cleanup creature
                 self.creatures.remove(creature)
-            self.dead_creatures = []
+            self.dead_creatures = set()
 
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
