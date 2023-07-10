@@ -91,11 +91,6 @@ class Simulation:
                 self.creatures.remove(creature)
             self.dead_creatures = []
 
-            # cleanup if there are more creatures than allowed
-            if len(self.creatures) > self.config['simulation']['max_creatures']:
-                first_creature = len(self.creatures) - self.config['simulation']['max_creatures'] // 2
-                self.creatures = self.creatures[0 + first_creature:self.config['simulation']['max_creatures'] + first_creature]
-
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
                 # select random species
