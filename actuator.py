@@ -9,7 +9,7 @@ def move(simulation, world, creature, signals):
     # world does not allow floats
     signals = np.round(signals)
     # combine signals to get desired delta / new position
-    desired_move = np.array([signals[0] - signals[1], signals[2] - signals[3]])
+    desired_move = np.array([signals[0] - signals[1], signals[2] - signals[3]], dtype='int64')
     desired_position = creature.state['position'] + desired_move
 
     # make sure position in still inside simulation
@@ -31,8 +31,7 @@ def reproduce(simulation, world, creature, signals):
 
 def eat_grass(simulation, world, creature, signals):
     if signals[0] > 0.5:
-        row = int(creature.state['position'][0])
-        col = int(creature.state['position'][1])
+        row, col = creature.state['position'][0, 0], creature.state['position'][1, 0]
         if world.eat_grass(row, col, creature.config['creature'][creature.species]['grass_eat_speed']):
             creature.state['energy'] += creature.config['creature'][creature.species]['energy_from_grass']
         else:

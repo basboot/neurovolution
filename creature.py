@@ -55,7 +55,7 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), self.color)
+        screen.set_at((self.state['position'][0, 0], self.state['position'][1, 0]), self.color)
         # creature_color = (0, 0, 0)
         # if self.state['properties']['ploidy'] == 1:
         #     creature_color = (255, 0, 0)
