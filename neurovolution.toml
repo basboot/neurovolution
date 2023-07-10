@@ -101,12 +101,12 @@ direct_connections = [
 
 [creature.wolve]
 n_creatures = 25 # initial number of creatures
-initial_energy = 100
+initial_energy = 25
 max_energy = 1000
 max_age = 25
 energy_per_timestep = 1
 energy_from_grass = 0
-energy_from_rabbit = 10
+energy_from_rabbit = 5
 energy_from_dirt = 0
 min_energy_for_reproduction = 1
 min_age_for_reproduction = 10
@@ -149,6 +149,7 @@ hidden_layers = []
 # note: the order they are defined is the order in which they will be calculated
 connections = [
     ['four_random_values', 'move'],
+    ['look_for_other_animal', 'eat_animal']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
@@ -156,6 +157,5 @@ connections = [
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
     ['has_no_neighbours', 'reproduce'],
-    ['look_for_other_animal', 'eat_animal']
 ]
 
