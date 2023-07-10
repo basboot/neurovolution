@@ -85,6 +85,9 @@ class Simulation:
 
             # remove old creatures
             for creature in self.dead_creatures:
+                # cleanup world grid
+                self.world.remove_animal(creature.state['position'])
+                # cleanup creature
                 self.creatures.remove(creature)
             self.dead_creatures = []
 
