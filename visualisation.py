@@ -2,7 +2,13 @@ import pygame
 class Visualisation:
     def __init__(self, size=(500, 500), framerate=30, interval=1):
         pygame.init()
-        self.screen = pygame.display.set_mode(size)
+
+        self.scaling = 2
+
+        self.win = pygame.display.set_mode((size[0] * self.scaling, size[1] * self.scaling))
+
+        self.screen = pygame.Surface(size)
+
         self.clock = pygame.time.Clock()
         self.framerate = framerate
         self.frame = 0
@@ -25,6 +31,7 @@ class Visualisation:
 
         simulation.draw_simulation(self.screen)
 
+        self.win.blit(pygame.transform.scale(self.screen, self.win.get_rect().size), (0, 0))
         pygame.display.flip()
         self.clock.tick(self.framerate)
 
