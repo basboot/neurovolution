@@ -129,8 +129,8 @@ functions = [
 #  this.
 functions = [
     ['reproduce', 1, 'sigmoid', false],
+    ['eat_animal', 9, 'sigmoid', true],
     ['move', 4, 'sigmoid', false],
-    ['eat_animal', 9, 'sigmoid', false],
 ]
 
 [body.wolve]
