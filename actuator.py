@@ -16,7 +16,7 @@ def move(simulation, world, creature, signals):
     desired_position = simulation.move(desired_position)
 
     # check if world allows move
-    if world.move_animal(creature.state['position'], desired_position, animal=creature.id):
+    if world.move_animal(creature.state['position'], desired_position, animal=creature):
         creature.state['position'] = desired_position
 
 def reproduce(simulation, world, creature, signals):

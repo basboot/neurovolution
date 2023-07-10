@@ -30,7 +30,7 @@ class World:
         self.array_size = (self.size,self.size)
         self.grid = np.zeros(self.array_size)
         self.grass_length = np.zeros(self.array_size)
-        self.animal_grid = np.zeros(self.array_size)
+        self.animal_grid = np.empty(shape=self.array_size, dtype=object) # store creatures as objects
 
         self.make_random_world()
 
@@ -48,15 +48,15 @@ class World:
 
     def add_animal(self, position, animal):
         # space is occupied, so cannot add animal
-        if self.animal_grid[position[0, 0], position[1, 0]] > 0:
+        if self.animal_grid[position[0, 0], position[1, 0]] is not None:
             return False
         else:
             self.animal_grid[position[0, 0], position[1, 0]] = animal
             return True
 
     def remove_animal(self, position):
-        if self.animal_grid[position[0, 0], position[1, 0]] > 0:
-            self.animal_grid[position[0, 0], position[1, 0]] = 0
+        if self.animal_grid[position[0, 0], position[1, 0]] is not None:
+            self.animal_grid[position[0, 0], position[1, 0]] = None
             return True
         else:
             return False
@@ -134,7 +134,8 @@ class World:
         if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
             return np.zeros(9)
 
-        info = self.animal_grid[row - 1:row + 2, col - 1:col + 2].reshape(9)
+        # None/Object => False/True => 0/1
+        info = np.array(self.animal_grid[row - 1:row + 2, col - 1:col + 2], dtype='bool').reshape(9).astype(int)
 
         return info
 

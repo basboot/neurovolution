@@ -25,13 +25,13 @@ class Creature:
             # find position in the world for this creature
             while True:
                 position = np.random.random_integers(0, config['world_parameters']['size'] - 1, (2, 1))
-                animal_added = world.add_animal(position, self.id)
+                animal_added = world.add_animal(position, self)
 
                 # break if an empty spot has been found
                 if animal_added:
                     break
         else:
-            assert world.add_animal(position, self.id), "New creature position not empty"
+            assert world.add_animal(position, self), "New creature position not empty"
 
         self.state = {
             # TODO: move position select to simulation
@@ -117,11 +117,11 @@ class Creature:
         new_position = self.state['position'] + np.random.randint(-1, 2, (2, 1))
 
         # to see if the position is empty, we just try to put a test animal in the world
-        if self.world.add_animal(new_position, self.id):
+        if self.world.add_animal(new_position, self):
             # remove test animal
             self.world.remove_animal(new_position)
             # create real animal
-            new_creature = Creature(self.config, self.world, [self.name, self.id, self.color], dna=new_dna, position=new_position)
+            new_creature = Creature(self.config, self.world, [self.name, self, self.color], dna=new_dna, position=new_position)
             return new_creature
         else:
             # position not empty, reproduction fails
