@@ -136,12 +136,13 @@ class World:
         return info
 
     def give_information_about_animals(self, row, col):
-        # TODO: improve sides
-        if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
-            return np.empty(9, dtype=object)
 
-        info = self.animal_grid[row - 1:row + 2, col - 1:col + 2].reshape(9)
-
+        info = np.empty(9, dtype=object)
+        for i in range(9):
+            r = [-1,-1,-1,0,0,0,1,1,1][i]
+            c = [-1,0,1,-1,0,1,-1,0,1][i]
+            if 0<=row+r<self.size and 0<=col+c<=self.size:
+                info[i] = self.animal_grid[row+r][col+c]
         return info
 
     def give_information_about_temperature(self, row, col,time):
