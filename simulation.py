@@ -39,6 +39,11 @@ class Simulation:
         self.season_clock = 0
         self.generation = 0
 
+        self.count = {
+            "rabbit": 0,
+            "wolve": 0
+        }
+
 
     def left_upper_corner(self):
         print('left_upper_corner')
@@ -49,6 +54,10 @@ class Simulation:
         # TODO: populate world
 
         while self.simulation_step < max_iterations:
+            self.count = {
+                "rabbit": 0,
+                "wolve": 0
+            }
             self.simulation_step += 1
 
             # update clock
@@ -67,6 +76,7 @@ class Simulation:
 
             stopwatch.start("creatures_update")
             for creature in self.creatures:
+                self.count[creature.species] += 1
                 creature.update(self, self.world)
                 # creatures die when they have no energy
                 if creature.state['energy'] < 0:
@@ -85,6 +95,7 @@ class Simulation:
 
             # remove old creatures
             for creature in self.dead_creatures:
+                self.count[creature.species] -= 1
                 # cleanup world grid
                 self.world.remove_animal(creature.state['position'])
                 # cleanup creature
@@ -97,6 +108,7 @@ class Simulation:
                 species = self.config['creatures']['species']
                 selected_species =  random.choice(species)
                 self.creatures.append(Creature(self.config, self.world, selected_species))
+                self.count[selected_species[0]] += 1
             stopwatch.stop("creatures_population_changes")
 
             stopwatch.start("visualisation")
@@ -114,6 +126,6 @@ class Simulation:
         return np.clip(position, 0, self.config['world_parameters']['size'] - 1)
 
     def draw_simulation(self, screen):
-        font = pygame.font.SysFont('arial', int(self.config['visualisation']['size'][0] * 0.0625))
-        text_surface = font.render(f"t = {self.simulation_step}", False, (0, 0, 0))
+        font = pygame.font.SysFont('arial', int(self.config['world_parameters']['size'] * 0.0625))
+        text_surface = font.render(f"t = {self.simulation_step}, r = {self.count['rabbit']}, w = {self.count['wolve']}", False, (0, 0, 0))
         screen.blit(text_surface, (10, 10))
