@@ -39,6 +39,7 @@ species = [
 [creature.rabbit]
 n_creatures = 250 # initial number of creatures
 initial_energy = 10
+child_energy = 5
 max_energy = 1000
 max_age = 10
 energy_per_timestep = 0.5
@@ -100,16 +101,17 @@ direct_connections = [
 # WOLVE
 
 [creature.wolve]
-n_creatures = 25 # initial number of creatures
-initial_energy = 25
+n_creatures = 1 # initial number of creatures
+initial_energy = 2
+child_energy = 1
 max_energy = 1000
 max_age = 25
 energy_per_timestep = 1
 energy_from_grass = 0
 energy_from_rabbit = 5
 energy_from_dirt = 0
-min_energy_for_reproduction = 1
-min_age_for_reproduction = 10
+min_energy_for_reproduction = 3
+min_age_for_reproduction = 0
 grass_eat_speed = 0
 
 [sensors.wolve]

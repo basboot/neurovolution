@@ -123,7 +123,8 @@ class Creature:
             # create real animal
             new_creature = Creature(self.config, self.world, [self.name, self, self.color], dna=new_dna, position=new_position)
 
-            #self.state['energy'] = new_creature.state['energy'] = self.state['energy'] // 2
+            self.state['energy'] -= self.config['creature'][self.species]['child_energy']
+            new_creature.state['energy'] = self.config['creature'][self.species]['child_energy']
 
             return new_creature
         else:
