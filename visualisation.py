@@ -19,21 +19,22 @@ class Visualisation:
         if self.frame % self.interval > 0:
             return
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+        for i in range(10 if len(simulation.killed) > 0 else 1):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
 
-        self.draw_world(world)
+            self.draw_world(world)
 
-        for creature in creatures:
-            creature.draw_creature(self.screen)
+            for creature in creatures:
+                creature.draw_creature(self.screen)
 
-        simulation.draw_simulation(self.screen)
+            simulation.draw_simulation(self.screen, i % 2 > 0)
 
-        self.win.blit(pygame.transform.scale(self.screen, self.win.get_rect().size), (0, 0))
-        pygame.display.flip()
-        self.clock.tick(self.framerate)
+            self.win.blit(pygame.transform.scale(self.screen, self.win.get_rect().size), (0, 0))
+            pygame.display.flip()
+            self.clock.tick(self.framerate)
 
     def draw_world(self, world):
         self.screen.fill((255, 255, 255))
