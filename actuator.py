@@ -55,6 +55,7 @@ def eat_animal(simulation, world, creature, signals):
                 information[i].state['energy'] = -100
                 count += 1
                 print(f"wolve at {creature.state['position'][0, 0]}, {creature.state['position'][1, 0]} eats rabbit at {information[i].state['position'][0, 0]}, {information[i].state['position'][1, 0]}")
+                simulation.killed.append(information[i].state['position'])
             else:
                 pass
 

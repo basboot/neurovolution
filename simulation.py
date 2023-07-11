@@ -44,6 +44,8 @@ class Simulation:
             "wolve": 0
         }
 
+        self.killed = []
+
 
     def left_upper_corner(self):
         print('left_upper_corner')
@@ -93,14 +95,7 @@ class Simulation:
             print(f"{len(self.born_creatures)} born")
             self.born_creatures = []
 
-            # remove old creatures
-            for creature in self.dead_creatures:
-                self.count[creature.species] -= 1
-                # cleanup world grid
-                self.world.remove_animal(creature.state['position'])
-                # cleanup creature
-                self.creatures.remove(creature)
-            self.dead_creatures = set()
+
 
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
@@ -119,13 +114,29 @@ class Simulation:
             print(f"{len(self.creatures)} creatures")
             stopwatch.stop("visualisation")
 
+            # remove old creatures
+            for creature in self.dead_creatures:
+                self.count[creature.species] -= 1
+                # cleanup world grid
+                self.world.remove_animal(creature.state['position'])
+                # cleanup creature
+                self.creatures.remove(creature)
+            self.dead_creatures = set()
+            self.killed = []
+
     def add_creature(self, creature):
         self.born_creatures.append(creature)
 
     def move(self, position):
         return np.clip(position, 0, self.config['world_parameters']['size'] - 1)
 
-    def draw_simulation(self, screen):
-        font = pygame.font.SysFont('arial', int(self.config['world_parameters']['size'] * 0.0625))
-        text_surface = font.render(f"t = {self.simulation_step}, r = {self.count['rabbit']}, w = {self.count['wolve']}", False, (0, 0, 0))
-        screen.blit(text_surface, (10, 10))
+    def draw_simulation(self, screen, killed=False):
+        if self.config['visualisation']['scaling'] < 5:
+            font = pygame.font.SysFont('arial', int(self.config['world_parameters']['size'] * 0.0625))
+            text_surface = font.render(f"t = {self.simulation_step}, r = {self.count['rabbit']}, w = {self.count['wolve']}", False, (0, 0, 0))
+            screen.blit(text_surface, (10, 10))
+
+        if killed:
+            for killed_creature in self.killed:
+                pass
+                screen.set_at((killed_creature[0, 0], killed_creature[1, 0]), (0, 0, 0))
