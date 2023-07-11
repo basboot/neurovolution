@@ -5,19 +5,19 @@ debug = true
 
 [simulation]
 max_iterations = 100000
-min_creatures = 10
+min_creatures = 5
 # if value > -1 this value will be used to seed the random generators
 seed = -1
 season_iterations = 100
 
 [visualisation]
 on = true
-size = [256, 256]
+scaling = 40
 framerate = 60
 interval = 1
 
 [world_parameters]
-size = 256
+size = 10
 grass_growing_speed = 0.01
 max_grass_length = 1
 max_water_depth = 1000
@@ -25,7 +25,7 @@ max_terrain_height = 3000
 max_temperature = 20
 min_temperature = 10
 delta_temperature = 0.001
-grass_density = 0.0001
+grass_density = 0.1
 
 [creatures]
 # name, id, color
@@ -37,25 +37,24 @@ species = [
 # RABBIT
 
 [creature.rabbit]
-n_creatures = 250 # initial number of creatures
+n_creatures = 10 # initial number of creatures
 initial_energy = 10
 child_energy = 5
 max_energy = 1000
-max_age = 10
+max_age = 1000
 energy_per_timestep = 0.5
 energy_from_grass = 2
-energy_from_rabbit = 0
 energy_from_dirt = 0
-min_energy_for_reproduction = 1
-min_age_for_reproduction = 5
+min_energy_for_reproduction = 15
+min_age_for_reproduction = 0
 grass_eat_speed = 1
 
 [sensors.rabbit]
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
-    ['four_random_values', 4, 'None', false],
-    ['look_for_grass', 9, 'None', false],
+    ['four_random_values', 4, 'None', true],
+    ['look_for_grass', 9, 'None', true],
     ['has_no_neighbours', 1, 'None', true]
 ]
 
@@ -66,9 +65,9 @@ functions = [
 #  mights lead to problems. They are actuated in order of the array however, so shifting them might prevent
 #  this.
 functions = [
-    ['reproduce', 1, 'sigmoid', false],
-    ['eat_grass', 1, 'sigmoid', false],
-    ['move', 4, 'sigmoid', false],
+    ['reproduce', 1, 'sigmoid', true],
+    ['eat_grass', 1, 'sigmoid', true],
+    ['move', 4, 'sigmoid', true],
 ]
 
 [body.rabbit]
@@ -87,14 +86,14 @@ hidden_layers = []
 # note: the order they are defined is the order in which they will be calculated
 connections = [
     ['four_random_values', 'move'],
-    ['look_for_grass', 'eat_grass']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
 # there will be no weight, bias or activation out == in, so dimensions must match!
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
-    ['has_no_neighbours', 'reproduce']
+    ['has_no_neighbours', 'reproduce'],
+    ['look_for_grass', 'eat_grass']
 ]
 
 
@@ -105,10 +104,9 @@ n_creatures = 1 # initial number of creatures
 initial_energy = 2
 child_energy = 1
 max_energy = 1000
-max_age = 25
-energy_per_timestep = 1
+max_age = 2500
+energy_per_timestep = 0.01
 energy_from_grass = 0
-energy_from_rabbit = 5
 energy_from_dirt = 0
 min_energy_for_reproduction = 3
 min_age_for_reproduction = 0
@@ -118,7 +116,7 @@ grass_eat_speed = 0
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
-    ['four_random_values', 4, 'None', false],
+    ['four_random_values', 4, 'None', true],
     ['has_no_neighbours', 1, 'None', true],
     ['look_for_other_animal', 9, 'None', true]
 ]
@@ -130,9 +128,9 @@ functions = [
 #  mights lead to problems. They are actuated in order of the array however, so shifting them might prevent
 #  this.
 functions = [
-    ['reproduce', 1, 'sigmoid', false],
+    ['reproduce', 1, 'sigmoid', true],
     ['eat_animal', 9, 'sigmoid', true],
-    ['move', 4, 'sigmoid', false],
+    ['move', 4, 'sigmoid', true],
 ]
 
 [body.wolve]
@@ -151,7 +149,6 @@ hidden_layers = []
 # note: the order they are defined is the order in which they will be calculated
 connections = [
     ['four_random_values', 'move'],
-    ['look_for_other_animal', 'eat_animal']
 ]
 
 # define connections that bypass the brain: [sensor, actuator]
@@ -159,5 +156,6 @@ connections = [
 # note: sensors/actuators will still respect if they are active in the dna
 direct_connections = [
     ['has_no_neighbours', 'reproduce'],
+    ['look_for_other_animal', 'eat_animal']
 ]
 

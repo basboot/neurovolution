@@ -21,7 +21,7 @@ class Simulation:
 
         self.world = World(config)
 
-        self.visualisation = Visualisation(size=config['visualisation']['size'],
+        self.visualisation = Visualisation(config['visualisation']['scaling'], size=(config['world_parameters']['size'], config['world_parameters']['size']),
                                   framerate=config['visualisation']['framerate'],
                                   interval=config['visualisation']['interval']) \
         if config['visualisation']['on'] else None

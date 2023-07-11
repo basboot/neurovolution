@@ -1,9 +1,9 @@
 import pygame
 class Visualisation:
-    def __init__(self, size=(500, 500), framerate=30, interval=1):
+    def __init__(self, scaling, size=(500, 500), framerate=30, interval=1):
         pygame.init()
 
-        self.scaling = 2
+        self.scaling = scaling
 
         self.win = pygame.display.set_mode((size[0] * self.scaling, size[1] * self.scaling))
 
