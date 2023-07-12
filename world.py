@@ -141,7 +141,7 @@ class World:
         for i in range(9):
             r = [-1,-1,-1,0,0,0,1,1,1][i]
             c = [-1,0,1,-1,0,1,-1,0,1][i]
-            if 0<=row+r<self.size and 0<=col+c<=self.size:
+            if 0<=row+r<self.size and 0<=col+c<self.size:
                 info[i] = self.animal_grid[row+r][col+c]
         return info
 
