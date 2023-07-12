@@ -23,7 +23,8 @@ class Simulation:
 
         self.visualisation = Visualisation(config['visualisation']['scaling'], size=(config['world_parameters']['size'], config['world_parameters']['size']),
                                   framerate=config['visualisation']['framerate'],
-                                  interval=config['visualisation']['interval']) \
+                                  interval=config['visualisation']['interval'],
+                                           visualise_eating=config['visualisation']['visualise_eating']) \
         if config['visualisation']['on'] else None
 
         self.creatures = []

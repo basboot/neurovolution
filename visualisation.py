@@ -1,6 +1,6 @@
 import pygame
 class Visualisation:
-    def __init__(self, scaling, size=(500, 500), framerate=30, interval=1):
+    def __init__(self, scaling, size=(500, 500), framerate=30, interval=1, visualise_eating=False):
         pygame.init()
 
         self.scaling = scaling
@@ -13,13 +13,14 @@ class Visualisation:
         self.framerate = framerate
         self.frame = 0
         self.interval = interval
+        self.visualise_eating = visualise_eating
 
     def update(self, world, creatures, simulation):
         self.frame += 1
         if self.frame % self.interval > 0:
             return
 
-        for i in range(10 if len(simulation.killed) > 0 else 1):
+        for i in range(10 if self.visualise_eating and len(simulation.killed) > 0 else 1):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

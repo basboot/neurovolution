@@ -15,6 +15,7 @@ on = true
 scaling = 40
 framerate = 60
 interval = 1
+visualise_eating = false
 
 [world_parameters]
 size = 10
