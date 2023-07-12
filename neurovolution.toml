@@ -12,10 +12,10 @@ season_iterations = 100
 
 [visualisation]
 on = true
-scaling = 40
+scaling = 20
 framerate = 60
 interval = 1
-visualise_eating = false
+visualise_eating = true
 
 [world_parameters]
 size = 10
@@ -43,11 +43,11 @@ initial_energy = 10
 child_energy = 5
 max_energy = 1000
 max_age = 1000
-energy_per_timestep = 0.0
-energy_from_grass = 2
+energy_per_timestep = 0.1
+energy_from_grass = 1
 energy_from_dirt = 0
-min_energy_for_reproduction = 15
-min_age_for_reproduction = 100000
+min_energy_for_reproduction = 5
+min_age_for_reproduction = 0
 grass_eat_speed = 1
 
 [sensors.rabbit]
@@ -102,14 +102,14 @@ direct_connections = [
 
 [creature.wolve]
 n_creatures = 1 # initial number of creatures
-initial_energy = 2
-child_energy = 1
+initial_energy = 20
+child_energy = 10
 max_energy = 1000
 max_age = 2500
 energy_per_timestep = 0.0
 energy_from_grass = 0
 energy_from_dirt = 0
-min_energy_for_reproduction = 3
+min_energy_for_reproduction = 25
 min_age_for_reproduction = 2500
 grass_eat_speed = 0
 
@@ -117,7 +117,7 @@ grass_eat_speed = 0
 # all sensor functions must be defined in sensor.py
 # configformat: 'functionname', number of outputs, activation function ('None'), true=always on|false=evolution
 functions = [
-    ['four_random_values', 4, 'None', true],
+    #['four_random_values', 4, 'None', true],
     ['has_no_neighbours', 1, 'None', true],
     ['look_for_other_animal', 9, 'None', true]
 ]
@@ -131,7 +131,7 @@ functions = [
 functions = [
     ['reproduce', 1, 'sigmoid', true],
     ['eat_animal', 9, 'sigmoid', true],
-    ['move', 4, 'sigmoid', true],
+    #['move', 4, 'sigmoid', true],
 ]
 
 [body.wolve]
@@ -149,7 +149,7 @@ hidden_layers = []
 # every connection will get its own outxin parameters
 # note: the order they are defined is the order in which they will be calculated
 connections = [
-    ['four_random_values', 'move'],
+    #['four_random_values', 'move'],
 ]
 
 # define connections that bypass the brain: [sensor, actuator]

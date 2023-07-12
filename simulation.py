@@ -82,6 +82,11 @@ class Simulation:
                 self.count[creature.species] += 1
                 creature.update(self, self.world)
 
+            # add new creatues
+            self.creatures += self.born_creatures
+            print(f"{len(self.born_creatures)} born")
+            self.born_creatures = []
+
             # find dead creatures after all updates
             for creature in self.creatures:
                 # creatures die when they have no energy
@@ -94,13 +99,6 @@ class Simulation:
             stopwatch.stop("creatures_update")
 
             stopwatch.start("creatures_population_changes")
-            # add new creatues
-            self.creatures += self.born_creatures
-            print(f"{len(self.born_creatures)} born")
-            self.born_creatures = []
-
-
-
             # prevent extinction
             while len(self.creatures) < self.config['simulation']['min_creatures']:
                 # select random species
