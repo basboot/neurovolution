@@ -28,8 +28,12 @@ class Visualisation:
 
             self.draw_world(world)
 
+
+
             for creature in creatures:
                 creature.draw_creature(self.screen)
+
+            # world.draw_world_animals(self.screen)
 
             simulation.draw_simulation(self.screen, i % 2 > 0)
 
