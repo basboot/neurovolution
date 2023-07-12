@@ -108,7 +108,10 @@ class Creature:
     def use_actuators(self, outputs, simulation, world):
         output_start = 0
         for actuator in self.state['actuators']:
+            temp_energy = self.state['energy']
             use_actuator(actuator[0], actuator[2], outputs[actuator[0]], simulation, world, self)
+            if self.state['energy'] > temp_energy:
+                break # don't move after eating (not needed but looks better)
 
     def reproduce(self, other=None):
         new_dna = self.state['dna'].reproduce(other)

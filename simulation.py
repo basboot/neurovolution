@@ -80,6 +80,9 @@ class Simulation:
             for creature in self.creatures:
                 self.count[creature.species] += 1
                 creature.update(self, self.world)
+
+            # find dead creatures after all updates
+            for creature in self.creatures:
                 # creatures die when they have no energy
                 if creature.state['energy'] < 0:
                     self.dead_creatures.add(creature)
