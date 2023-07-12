@@ -16,6 +16,7 @@ class Creature:
         self.id = creature_config[1]
         self.color = creature_config[2]
 
+
         self.config = config
         self.world = world
 
@@ -124,7 +125,7 @@ class Creature:
             # remove test animal
             self.world.remove_animal(new_position)
             # create real animal
-            new_creature = Creature(self.config, self.world, [self.name, self, self.color], dna=new_dna, position=new_position)
+            new_creature = Creature(self.config, self.world, [self.name, self.id, self.color], dna=new_dna, position=new_position)
 
             self.state['energy'] -= self.config['creature'][self.species]['child_energy']
             new_creature.state['energy'] = self.config['creature'][self.species]['child_energy']
