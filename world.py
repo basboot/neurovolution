@@ -123,6 +123,15 @@ class World:
                     color = (200,255,200)
                     screen.set_at((row,col), color)
 
+    def draw_world_animals(self, screen):
+        for row in range(self.size):
+            for col in range(self.size):
+                tile_value = self.animal_grid[row][col]
+                if tile_value is not None:
+                    color = (255, 255, 0)
+                    screen.set_at((row, col), color)
+
+
 
 
 
