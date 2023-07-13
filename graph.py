@@ -17,23 +17,30 @@ class Graph:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
         self.t = []
-        self.n = []
+        self.nr = []
+        self.nw = []
 
-        self.rabbits, = self.ax.plot(self.t, self.n)
+        self.rabbits, = self.ax.plot(self.t, self.nr, label = "rabbits")
+        self.wolves, = self.ax.plot(self.t, self.nw, label = "wolves")
 
+        plt.legend()
         plt.xlabel("timesteps")
-        plt.ylabel("number of rabbits")
-        plt.title("rabbit simulation")
+        plt.ylabel("number of creatures")
+        plt.title("world simulation")
 
     def update(self, word, creatures, simulation):
         self.t.append(simulation.simulation_step)
-        self.n.append(len(simulation.creatures))
+        self.nr.append(simulation.count['rabbit'])
+        self.nw.append(simulation.count['wolve'])
 
         self.rabbits.set_xdata(self.t)
-        self.rabbits.set_ydata(self.n)
+        self.rabbits.set_ydata(self.nr)
+
+        self.wolves.set_xdata(self.t)
+        self.wolves.set_ydata(self.nw)
 
         plt.xlim([0, simulation.simulation_step])
-        plt.ylim([0, max(self.n)])
+        plt.ylim([0, max(max(self.nr), max(self.nw))])
         self.fig.canvas.draw()
 
         # to flush the GUI events

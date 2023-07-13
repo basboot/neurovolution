@@ -16,6 +16,7 @@ class Creature:
         self.id = creature_config[1]
         self.color = creature_config[2]
 
+
         self.config = config
         self.world = world
 
@@ -25,19 +26,20 @@ class Creature:
             # find position in the world for this creature
             while True:
                 position = np.random.random_integers(0, config['world_parameters']['size'] - 1, (2, 1))
-                animal_added = world.add_animal(position, world.RABBIT)
+                animal_added = world.add_animal(position, self)
 
                 # break if an empty spot has been found
                 if animal_added:
                     break
         else:
-            assert world.add_animal(position, world.RABBIT), "New creature position not empty"
+            assert world.add_animal(position, self), "New creature position not empty"
 
         self.state = {
             # TODO: move position select to simulation
             'position': position,
             'dna': DNA(config, species=self.species) if dna is None else dna,
             'energy': config['creature'][self.species]['initial_energy'],
+            'age': 0
         }
 
         # add sensors from DNA
@@ -54,7 +56,7 @@ class Creature:
 
 
     def draw_creature(self, screen):
-        screen.set_at((int(self.state['position'][0]), int(self.state['position'][1])), self.color)
+        screen.set_at((self.state['position'][0, 0], self.state['position'][1, 0]), self.color)
         # creature_color = (0, 0, 0)
         # if self.state['properties']['ploidy'] == 1:
         #     creature_color = (255, 0, 0)
@@ -64,6 +66,8 @@ class Creature:
         #                    (int(self.state['position'][0]), int(self.state['position'][1])), min(10, max(1, self.state['energy'])))
 
     def update(self, simulation, world):
+        self.state['age'] += 1
+
         stopwatch.start("sensors")
         inputs = self.get_sensors(simulation, world)
         stopwatch.stop("sensors")
@@ -105,20 +109,27 @@ class Creature:
     def use_actuators(self, outputs, simulation, world):
         output_start = 0
         for actuator in self.state['actuators']:
+            temp_energy = self.state['energy']
             use_actuator(actuator[0], actuator[2], outputs[actuator[0]], simulation, world, self)
+            if self.state['energy'] > temp_energy:
+                break # don't move after eating (not needed but looks better)
 
-    def reproduce(self, other=None, share_energy=True):
+    def reproduce(self, other=None):
         new_dna = self.state['dna'].reproduce(other)
 
         # choose position
         new_position = self.state['position'] + np.random.randint(-1, 2, (2, 1))
 
         # to see if the position is empty, we just try to put a test animal in the world
-        if self.world.add_animal(new_position, self.world.RABBIT):
+        if self.world.add_animal(new_position, self):
             # remove test animal
             self.world.remove_animal(new_position)
             # create real animal
             new_creature = Creature(self.config, self.world, [self.name, self.id, self.color], dna=new_dna, position=new_position)
+
+            self.state['energy'] -= self.config['creature'][self.species]['child_energy']
+            new_creature.state['energy'] = self.config['creature'][self.species]['child_energy']
+
             return new_creature
         else:
             # position not empty, reproduction fails

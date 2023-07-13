@@ -8,19 +8,30 @@ from world import World
 def heartbeat(simulation, world, creature):
     return [0] if simulation.simulation_step % creature.state['properties']['heartbeat'] > 0 else [1]
 
-def look(simulation, world, creature):
-    information = world.give_information_about_location(int(creature.state['position'][0]),
-                                                        int(creature.state['position'][1]))
+def look_for_grass(simulation, world, creature):
+    information = world.give_information_about_location(creature.state['position'][0, 0], creature.state['position'][1, 0])
 
     # filter grass only (for now)
     information = np.equal(information, world.GRASS).astype(int)
 
     return information
 
-def has_no_neighbours(simulation, world, creature):
-    information = world.give_information_about_animals(int(creature.state['position'][0]),
-                                                        int(creature.state['position'][1]))
+def look_for_other_animal(simulation, world, creature):
+    information = world.give_information_about_animals(creature.state['position'][0, 0], creature.state['position'][1, 0])
 
+    # None/Object => False/True => 0/1
+    information = np.array(information, dtype='bool').astype(int)
+
+    # filter self
+    information[4] = 0
+
+
+    return information
+
+def has_no_neighbours(simulation, world, creature):
+    information = world.give_information_about_animals(creature.state['position'][0, 0], creature.state['position'][1, 0])
+
+    information = np.array(information, dtype='bool').astype(int)
     # remove self from information
     information[4] = 0
     # filter grass only (for now)
@@ -31,20 +42,11 @@ def has_no_neighbours(simulation, world, creature):
     return has_no_neighbours
 
 def is_not_standing_on_grass(simulation, world, creature):
-    information = world.give_information_about_location(int(creature.state['position'][0]),
-                                                        int(creature.state['position'][1]))
+    information = world.give_information_about_location(creature.state['position'][0, 0], creature.state['position'][1, 0])
     return [1] if information != World.GRASS else [0]
 
 def energy_level(simulation, world, creature):
     return creature.state['energy']
-
-def find_middle(simulation, world, creature):
-    x_middle = creature.config['world_parameters']['size'] / 2
-    y_middle = creature.config['world_parameters']['size'] / 2
-    x = creature.state['position'][0]
-    y = creature.state['position'][1]
-
-    return [int(x < x_middle), int(x > x_middle), int(y < y_middle), int(y > y_middle)]
 
 def four_random_values(simulation, world, creature):
     return np.random.uniform(-1, 1, (4, 1))

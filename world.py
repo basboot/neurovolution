@@ -2,6 +2,9 @@ import pygame
 import random
 import numpy as np
 
+import creature
+
+
 class World:
 
     EMPTY = 0
@@ -19,7 +22,6 @@ class World:
 
         self.max_water_depth = config['world_parameters']['max_water_depth']
         self.grass_growing_speed = config['world_parameters']['grass_growing_speed']
-        self.grass_eat_speed = config['world_parameters']['grass_eat_speed']
         self.max_grass_length = config['world_parameters']['max_grass_length']
         self.max_terrain_height = config['world_parameters']['max_terrain_height']
         self.max_temperature = config['world_parameters']['max_temperature']
@@ -31,7 +33,7 @@ class World:
         self.array_size = (self.size,self.size)
         self.grid = np.zeros(self.array_size)
         self.grass_length = np.zeros(self.array_size)
-        self.animal_grid = np.zeros(self.array_size)
+        self.animal_grid = np.empty(shape=self.array_size, dtype=object) # store creatures as objects
 
         self.make_random_world()
 
@@ -48,23 +50,26 @@ class World:
 
 
     def add_animal(self, position, animal):
+        assert (type(animal) is creature.Creature), "no Creature send do grid"
         # space is occupied, so cannot add animal
-        if self.animal_grid[int(position[0]), int(position[1])] > 0:
+        if self.animal_grid[position[0, 0], position[1, 0]] is not None:
             return False
         else:
-            self.animal_grid[int(position[0]), int(position[1])] = animal
+            self.animal_grid[position[0, 0], position[1, 0]] = animal
             return True
 
     def remove_animal(self, position):
-        if self.animal_grid[int(position[0]), int(position[1])] > 0:
-            self.animal_grid[int(position[0]), int(position[1])] = 0
+        if self.animal_grid[position[0, 0], position[1, 0]] is not None:
+            self.animal_grid[position[0, 0], position[1, 0]] = None
             return True
         else:
             return False
 
     def move_animal(self, from_position, to_position, animal):
+
         # check if animal is in this position
-        if self.animal_grid[int(from_position[0]), int(from_position[1])] == animal:
+        assert (type(animal) is creature.Creature), "no Creature send do grid"
+        if self.animal_grid[from_position[0, 0], from_position[1, 0]] == animal:
             # check if animal can move to the other position
             if self.add_animal(to_position, animal):
                 self.remove_animal(from_position)
@@ -72,14 +77,14 @@ class World:
             else:
                 return False
 
-    def eat_grass(self,row,col):
+    def eat_grass(self, row, col, grass_eat_speed):
         if row > self.size - 1 or row < 0 or col > self.size - 1 or col < 0:
             return False
 
         if self.grass_length[row][col] == 0:
             return False
 
-        self.grass_length[row][col] -= self.grass_eat_speed
+        self.grass_length[row][col] -= grass_eat_speed
         if self.grass_length[row][col] <= 0:
             self.grid[row][col] = self.EMPTY
 
@@ -118,6 +123,15 @@ class World:
                     color = (200,255,200)
                     screen.set_at((row,col), color)
 
+    def draw_world_animals(self, screen):
+        for row in range(self.size):
+            for col in range(self.size):
+                tile_value = self.animal_grid[row][col]
+                if tile_value is not None:
+                    color = (255, 255, 0)
+                    screen.set_at((row, col), color)
+
+
 
 
 
@@ -131,12 +145,13 @@ class World:
         return info
 
     def give_information_about_animals(self, row, col):
-        # TODO: improve sides
-        if row > self.size - 2 or row < 1 or col > self.size - 2 or col < 1:
-            return np.zeros(9)
 
-        info = self.animal_grid[row - 1:row + 2, col - 1:col + 2].reshape(9)
-
+        info = np.empty(9, dtype=object)
+        for i in range(9):
+            r = [-1,-1,-1,0,0,0,1,1,1][i]
+            c = [-1,0,1,-1,0,1,-1,0,1][i]
+            if 0<=row+r<self.size and 0<=col+c<self.size:
+                info[i] = self.animal_grid[row+r][col+c]
         return info
 
     def give_information_about_temperature(self, row, col,time):
