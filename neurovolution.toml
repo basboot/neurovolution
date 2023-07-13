@@ -102,14 +102,14 @@ direct_connections = [
 
 [creature.wolve]
 n_creatures = 25 # initial number of creatures
-initial_energy = 20
+initial_energy = 30
 child_energy = 10
 max_energy = 1000
 max_age = 2500
-energy_per_timestep = 0.0
+energy_per_timestep = 0.5
 energy_from_grass = 0
 energy_from_dirt = 0
-min_energy_for_reproduction = 30
+min_energy_for_reproduction = 35
 min_age_for_reproduction = 0
 grass_eat_speed = 0
 
