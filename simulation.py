@@ -28,7 +28,7 @@ class Simulation:
                                            visualise_eating=config['visualisation']['visualise_eating']) \
         if config['visualisation']['on'] else None
 
-        self.graph = Graph() \
+        self.graph = Graph(config['creatures']['species']) \
             if config['graph']['on'] else None
 
         self.creatures = []
@@ -144,7 +144,6 @@ class Simulation:
 
             for species in self.config['creatures']['species']:
                 display_message += f", {species[0][0]} = {self.count[species[0]]}"
-                self.count[species[0]] = 0
 
             text_surface = font.render(display_message, False, (0, 0, 0))
             screen.blit(text_surface, (10, 10))

@@ -9,7 +9,7 @@ import numpy as np
 
 
 class Graph:
-    def __init__(self):
+    def __init__(self, species):
         # enable interactive mode
         # https://www.geeksforgeeks.org/how-to-update-a-plot-on-same-figure-during-the-loop/
         plt.ion()
@@ -17,11 +17,17 @@ class Graph:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
         self.t = []
-        self.nr = []
-        self.nw = []
 
-        self.rabbits, = self.ax.plot(self.t, self.nr, label = "rabbits")
-        self.wolves, = self.ax.plot(self.t, self.nw, label = "wolves")
+        self.n = {}
+        self.plots = {}
+
+        self.species_names = []
+        for s in species:
+            self.species_names.append(s[0])
+
+        for species in self.species_names:
+            self.n[species] = []
+            self.plots[species], = self.ax.plot(self.t, self.n[species], label = species)
 
         plt.legend()
         plt.xlabel("timesteps")
@@ -30,17 +36,17 @@ class Graph:
 
     def update(self, word, creatures, simulation):
         self.t.append(simulation.simulation_step)
-        self.nr.append(simulation.count['rabbit'])
-        self.nw.append(simulation.count['wolve'])
 
-        self.rabbits.set_xdata(self.t)
-        self.rabbits.set_ydata(self.nr)
-
-        self.wolves.set_xdata(self.t)
-        self.wolves.set_ydata(self.nw)
+        ylim = 0
+        for species in self.species_names:
+            print(species)
+            self.n[species].append(simulation.count[species])
+            self.plots[species].set_xdata(self.t)
+            self.plots[species].set_ydata(self.n[species])
+            ylim = max(ylim, max(self.n[species]))
 
         plt.xlim([0, simulation.simulation_step])
-        plt.ylim([0, max(max(self.nr), max(self.nw))])
+        plt.ylim([0, ylim])
         self.fig.canvas.draw()
 
         # to flush the GUI events
