@@ -41,8 +41,6 @@ class Simulation:
         self.generation = 0
 
         self.count = {
-            "rabbit": 0,
-            "wolve": 0
         }
 
         self.killed = []
@@ -57,10 +55,10 @@ class Simulation:
         # TODO: populate world
 
         while self.simulation_step < max_iterations:
-            self.count = {
-                "rabbit": 0,
-                "wolve": 0
-            }
+            # reset counters
+            for species in self.config['creatures']['species']:
+                self.count[species[0]] = 0
+
             self.simulation_step += 1
 
             # update clock
@@ -135,7 +133,14 @@ class Simulation:
     def draw_simulation(self, screen, killed=False):
         if self.config['visualisation']['scaling'] < 5:
             font = pygame.font.SysFont('arial', int(self.config['world_parameters']['size'] * 0.0625))
-            text_surface = font.render(f"t = {self.simulation_step}, r = {self.count['rabbit']}, w = {self.count['wolve']}", False, (0, 0, 0))
+
+            display_message = f"t = {self.simulation_step}"
+
+            for species in self.config['creatures']['species']:
+                display_message += f", {species[0][0]} = {self.count[species[0]]}"
+                self.count[species[0]] = 0
+
+            text_surface = font.render(display_message, False, (0, 0, 0))
             screen.blit(text_surface, (10, 10))
 
         if killed:
